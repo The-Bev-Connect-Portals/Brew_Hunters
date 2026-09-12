@@ -45,14 +45,14 @@
       <img
         src="{{ section.settings.image | image_url: width: 880 }}"
         alt="{{ section.settings.image.alt | default: section.settings.line_1 | escape }}"
-        width="440" height="440"
+        width="560" height="378"
         fetchpriority="high">
     {%- elsif section.settings.fallback_asset != blank -%}
       {%- comment -%} Ships with the theme so the hero renders before anyone opens the editor. {%- endcomment -%}
       <img
         src="{{ section.settings.fallback_asset | asset_url }}"
         alt="{{ section.settings.fallback_alt | escape }}"
-        width="440" height="440"
+        width="560" height="378"
         fetchpriority="high">
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag }}

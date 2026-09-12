@@ -20,11 +20,11 @@
       {%- if section.settings.image -%}
         <img src="{{ section.settings.image | image_url: width: 840 }}"
              alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
-             width="420" height="420" loading="lazy">
+             width="560" height="510" loading="lazy">
       {%- elsif section.settings.fallback_asset != blank -%}
         <img src="{{ section.settings.fallback_asset | asset_url }}"
              alt="{{ section.settings.fallback_alt | escape }}"
-             width="420" height="420" loading="lazy">
+             width="560" height="510" loading="lazy">
       {%- else -%}
         {{ 'product-2' | placeholder_svg_tag }}
       {%- endif -%}

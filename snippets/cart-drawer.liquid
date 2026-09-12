@@ -1,0 +1,41 @@
+{%- comment -%}
+  Side cart. Rendered once in theme.liquid.
+
+  Contents are painted by JS from /cart.js so the drawer stays correct after
+  every add, change and remove without a page reload. The cart page at
+  {{ routes.cart_url }} remains the no-JS fallback and is still linked from
+  the header, so nothing here is load-bearing for checkout.
+{%- endcomment -%}
+
+<div class="scrim" data-scrim data-open="false" hidden></div>
+
+<aside class="drawer"
+       data-cart-drawer
+       data-open="false"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="cart-drawer-title"
+       aria-hidden="true">
+
+  <div class="drawer__head">
+    <h2 id="cart-drawer-title">{{ 'cart.general.title' | t }}</h2>
+    <button class="drawer__close" type="button" data-cart-close aria-label="{{ 'accessibility.close' | t }}">&times;</button>
+  </div>
+
+  <div class="drawer__body" data-cart-body>
+    <p class="drawer__empty" data-cart-empty>{{ 'cart.general.empty' | t }}</p>
+  </div>
+
+  <div class="drawer__foot" data-cart-foot hidden>
+    <div class="drawer__row">
+      <span class="eyebrow">{{ 'cart.general.subtotal' | t }}</span>
+      <span class="price" data-cart-subtotal>{{ cart.total_price | money }}</span>
+    </div>
+    <a class="cta cta--block" href="{{ routes.cart_url }}/checkout" data-cart-checkout>
+      {{ 'cart.general.checkout' | t }}
+    </a>
+    <a class="cta cta--ghost cta--block" href="{{ routes.cart_url }}">View cart</a>
+    <p class="drawer__note">{{ 'cart.general.taxes_and_shipping' | t }}</p>
+    <p class="drawer__note">{{ settings.signature_notice }}</p>
+  </div>
+</aside>
