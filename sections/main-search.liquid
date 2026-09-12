@@ -1,0 +1,36 @@
+<section class="band scheme scheme--fog">
+  <div class="wrap">
+    <div class="band__head"><div><h2>{{ 'general.search.heading' | t }}</h2></div></div>
+
+    <form action="{{ routes.search_url }}" method="get" class="signup" role="search" style="max-width:460px;margin-bottom:2.4rem">
+      <label class="visually-hidden" for="search-input">{{ 'general.search.placeholder' | t }}</label>
+      <input id="search-input" type="search" name="q" value="{{ search.terms | escape }}"
+             placeholder="{{ 'general.search.placeholder' | t }}"
+             style="border-color:var(--spruce);color:var(--spruce)">
+      <button type="submit">{{ 'general.search.submit' | t }}</button>
+    </form>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="eyebrow eyebrow--clay" style="margin-bottom:1.4rem">
+          {{ 'general.search.results_with_count' | t: count: search.results_count }}
+        </p>
+        {%- paginate search.results by 24 -%}
+          <div class="grid">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                {% render 'product-card', card_product: item %}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endpaginate -%}
+      {%- else -%}
+        <p class="pdp__rowlabel">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Search", "tag": "div", "settings": [] }
+{% endschema %}

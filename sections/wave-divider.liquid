@@ -1,0 +1,86 @@
+{%- comment -%}
+  Three stacked wave paths. The colour pair is a schema setting so the same
+  section can bridge any two bands.
+{%- endcomment -%}
+{%- liquid
+  assign back = section.settings.color_back
+  assign mid = section.settings.color_mid
+  assign front = section.settings.color_front
+  assign shape = section.settings.shape
+-%}
+<svg class="wave" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true" role="presentation">
+  {%- if shape == 'b' -%}
+    <path d="M0 40s180 58 360 58 360-66 540-66 360 60 540 60V150H0Z" fill="var(--{{ back }})"/>
+    <path d="M0 60s180 58 360 58 360-66 540-66 360 60 540 60V150H0Z" fill="var(--{{ mid }})"/>
+    <path d="M0 80s180 58 360 58 360-66 540-66 360 60 540 60V150H0Z" fill="var(--{{ front }})"/>
+  {%- else -%}
+    <path d="M0 44s150 46 320 46 330-60 520-60 300 58 420 58 180-32 180-32V150H0Z" fill="var(--{{ back }})"/>
+    <path d="M0 62s150 46 320 46 330-60 520-60 300 58 420 58 180-32 180-32V150H0Z" fill="var(--{{ mid }})"/>
+    <path d="M0 84s150 46 320 46 330-60 520-60 300 58 420 58 180-32 180-32V150H0Z" fill="var(--{{ front }})"/>
+  {%- endif -%}
+</svg>
+
+{% schema %}
+{
+  "name": "Wave divider",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "shape",
+      "label": "Wave shape",
+      "options": [
+        { "value": "a", "label": "Shape A (long swell)" },
+        { "value": "b", "label": "Shape B (wide roll)" }
+      ],
+      "default": "a"
+    },
+    {
+      "type": "select",
+      "id": "color_back",
+      "label": "Back layer",
+      "options": [
+        { "value": "clay", "label": "Clay" },
+        { "value": "gold", "label": "Gold" },
+        { "value": "ember", "label": "Ember" },
+        { "value": "surf", "label": "Surf" },
+        { "value": "spruce", "label": "Spruce" },
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" }
+      ],
+      "default": "clay"
+    },
+    {
+      "type": "select",
+      "id": "color_mid",
+      "label": "Middle layer",
+      "options": [
+        { "value": "clay", "label": "Clay" },
+        { "value": "gold", "label": "Gold" },
+        { "value": "ember", "label": "Ember" },
+        { "value": "surf", "label": "Surf" },
+        { "value": "spruce", "label": "Spruce" },
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" }
+      ],
+      "default": "ember"
+    },
+    {
+      "type": "select",
+      "id": "color_front",
+      "label": "Front layer (must match the section below)",
+      "options": [
+        { "value": "clay", "label": "Clay" },
+        { "value": "gold", "label": "Gold" },
+        { "value": "ember", "label": "Ember" },
+        { "value": "surf", "label": "Surf" },
+        { "value": "spruce", "label": "Spruce" },
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" }
+      ],
+      "default": "fog"
+    }
+  ],
+  "presets": [{ "name": "Wave divider" }]
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+<section class="band scheme scheme--{{ section.settings.color_scheme | default: 'fog' }}">
+  <div class="wrap">
+    <div class="band__head"><div><h2>{{ page.title }}</h2></div></div>
+    <div class="rte" style="max-width:68ch">{{ page.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" }
+      ],
+      "default": "fog"
+    }
+  ]
+}
+{% endschema %}

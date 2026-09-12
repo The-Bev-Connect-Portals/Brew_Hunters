@@ -1,0 +1,80 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "heading": "Search",
+      "placeholder": "Search beer",
+      "submit": "Search",
+      "results_with_count": {
+        "one": "{{ count }} result",
+        "other": "{{ count }} results"
+      },
+      "no_results": "No results for \u201c{{ terms }}\u201d."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "That trail went cold. The beer is this way.",
+      "link": "Back to the shop"
+    },
+    "newsletter": {
+      "heading": "Get the drop list",
+      "placeholder": "you@email.com",
+      "submit": "Join",
+      "success": "You're on the list."
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "previous_image": "Previous image",
+    "next_image": "Next image"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "pack_size": "Pack size",
+      "one_time": "One time",
+      "subscribe_save": "Subscribe & save",
+      "vendor": "Brewery",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "from_price": "From"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty.",
+      "continue_shopping": "Keep shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "note": "Order notes",
+      "taxes_and_shipping": "Shipping and taxes calculated at checkout."
+    }
+  },
+  "sections": {
+    "build_a_box": {
+      "heading": "Build your box",
+      "count": "{{ count }} of {{ total }} cans",
+      "add": "Add box to cart",
+      "incomplete": "Pick {{ total }} to continue",
+      "clear": "Clear box"
+    }
+  },
+  "onboarding": {
+    "product_title": "Example beer",
+    "vendor": "Central Coast brewery"
+  }
+}

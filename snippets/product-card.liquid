@@ -1,0 +1,67 @@
+{%- comment -%}
+  Product card. Accepts: card_product, flag (optional override)
+{%- endcomment -%}
+{%- liquid
+  assign p = card_product
+  assign v = p.selected_or_first_available_variant
+  assign flag_text = flag
+  if p.tags contains 'flagship' and flag_text == blank
+    assign flag_text = 'Flagship'
+  endif
+  if p.tags contains 'fan-favorite' and flag_text == blank
+    assign flag_text = 'Fan favorite'
+  endif
+-%}
+<article class="card">
+  <div class="card__media">
+    {%- if p.available == false -%}
+      <span class="card__flag card__flag--sold">{{ 'products.product.sold_out' | t }}</span>
+    {%- elsif flag_text != blank -%}
+      <span class="card__flag">{{ flag_text }}</span>
+    {%- endif -%}
+    <a class="card__link" href="{{ p.url }}" aria-label="{{ p.title | escape }}"></a>
+    {%- if p.featured_media -%}
+      <img
+        src="{{ p.featured_media | image_url: width: 600 }}"
+        alt="{{ p.featured_media.alt | default: p.title | escape }}"
+        width="600"
+        height="516"
+        loading="lazy">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+
+  <div class="card__body">
+    {%- if p.vendor != blank -%}<p class="card__brand">{{ p.vendor }}</p>{%- endif -%}
+    <h3><a href="{{ p.url }}">{{ p.title }}</a></h3>
+
+    <div class="card__specs">
+      {%- if p.type != blank -%}<i>{{ p.type }}</i>{%- endif -%}
+      {%- assign abv = p.metafields.specs.abv.value -%}
+      {%- if abv != blank -%}<i>{{ abv }}</i>{%- endif -%}
+      {%- assign pack = p.metafields.specs.pack.value -%}
+      {%- if pack != blank -%}<i>{{ pack }}</i>{%- endif -%}
+    </div>
+
+    <div class="card__foot">
+      <span class="price">
+        {%- if p.price_varies -%}{{ 'products.product.from_price' | t }} {% endif -%}
+        {{ p.price | money }}
+        {%- if p.compare_at_price > p.price -%}
+          <span class="price--was">{{ p.compare_at_price | money }}</span>
+        {%- endif -%}
+      </span>
+
+      {%- if p.available -%}
+        <form method="post" action="{{ routes.cart_add_url }}" data-quick-add>
+          <input type="hidden" name="id" value="{{ v.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button class="add" type="submit">Add</button>
+        </form>
+      {%- else -%}
+        <button class="add" type="button" disabled>{{ 'products.product.sold_out' | t }}</button>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

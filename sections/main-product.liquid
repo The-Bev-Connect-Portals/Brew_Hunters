@@ -1,0 +1,209 @@
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign scheme = section.settings.color_scheme | default: 'fog'
+-%}
+
+<div class="band scheme scheme--{{ scheme }}" style="padding-block:0">
+  <div class="wrap crumbs">
+    <a href="{{ routes.all_products_collection_url }}">Shop beer</a>
+    <span>/</span>
+    {%- if product.vendor != blank -%}
+      <span>{{ product.vendor }}</span>
+      <span>/</span>
+    {%- endif -%}
+    <span>{{ product.title }}</span>
+  </div>
+</div>
+
+<div class="band band--flush-top scheme scheme--{{ scheme }}">
+  <div class="wrap pdp"
+       data-product
+       data-variants="{{ product.variants | json | escape }}"
+       data-url="{{ product.url }}">
+
+    <!-- ---------- gallery ---------- -->
+    <div class="pdp__media">
+      <div class="pdp__frame" data-pdp-frame>
+        {%- if product.featured_media -%}
+          <img data-pdp-img
+               src="{{ product.featured_media | image_url: width: 1200 }}"
+               alt="{{ product.featured_media.alt | default: product.title | escape }}"
+               width="600" height="552"
+               fetchpriority="high">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+
+      {%- if product.media.size > 1 -%}
+        <div class="pdp__thumbs" data-pdp-thumbs>
+          {%- for media in product.media limit: 6 -%}
+            <button type="button"
+                    aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+                    data-full="{{ media | image_url: width: 1200 }}"
+                    aria-label="{{ media.alt | default: product.title | escape }}">
+              <img src="{{ media | image_url: width: 200 }}"
+                   alt=""
+                   width="100" height="80" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- ---------- info ---------- -->
+    <div class="pdp__info">
+      {%- if product.vendor != blank -%}
+        <p class="eyebrow eyebrow--clay">{{ product.vendor }}</p>
+      {%- endif -%}
+      <h1>{{ product.title }}</h1>
+
+      <div class="card__specs">
+        {%- if product.type != blank -%}<i>{{ product.type }}</i>{%- endif -%}
+        {%- assign abv = product.metafields.specs.abv.value -%}
+        {%- if abv != blank -%}<i>{{ abv }}</i>{%- endif -%}
+        {%- assign size = product.metafields.specs.size.value -%}
+        {%- if size != blank -%}<i>{{ size }}</i>{%- endif -%}
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="pdp__desc rte">{{ product.description }}</div>
+      {%- endif -%}
+
+      <!-- ---------- buy box ---------- -->
+      <div class="buybox">
+        {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ v.id }}" data-variant-input>
+
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div>
+                <p class="pdp__rowlabel">{{ option.name }}</p>
+                <div class="packs" data-option-index="{{ forloop.index0 }}">
+                  {%- for value in option.values -%}
+                    <button class="pack"
+                            type="button"
+                            data-option-value="{{ value | escape }}"
+                            aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}">
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <div class="buybox__price">
+            <span class="price" data-pdp-price>{{ v.price | money }}</span>
+            {%- if v.compare_at_price > v.price -%}
+              <span class="price price--was" data-pdp-compare>{{ v.compare_at_price | money }}</span>
+            {%- endif -%}
+            <span>{{ section.settings.price_note }}</span>
+          </div>
+
+          {%- if product.selling_plan_groups.size > 0 -%}
+            <div class="plan">
+              <label>
+                <input type="radio" name="selling_plan" value="" checked>
+                <span>
+                  <b>{{ 'products.product.one_time' | t }}</b>
+                  <em>{{ v.price | money }}</em>
+                </span>
+              </label>
+
+              {%- for group in product.selling_plan_groups -%}
+                {%- for plan in group.selling_plans -%}
+                  {%- assign allocation = v.selling_plan_allocations
+                        | where: 'selling_plan_id', plan.id | first -%}
+                  <label>
+                    <input type="radio" name="selling_plan" value="{{ plan.id }}">
+                    <span>
+                      <b>{{ plan.name }}</b>
+                      {%- if allocation -%}
+                        <em>{{ allocation.price | money }}</em> ·
+                      {%- endif -%}
+                      skip or cancel anytime
+                    </span>
+                  </label>
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <button class="cta cta--block"
+                  type="submit"
+                  name="add"
+                  data-pdp-add
+                  {% unless v.available %}disabled{% endunless %}>
+            {%- if v.available -%}
+              {{ 'products.product.add_to_cart' | t }}
+            {%- else -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- endif -%}
+          </button>
+        {%- endform -%}
+
+        <p class="pdp__rowlabel" style="text-align:center">{{ section.settings.ship_note }}</p>
+      </div>
+
+      <!-- ---------- accordions ---------- -->
+      <div class="facts">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign body = block.settings.text
+            if block.settings.metafield_key != blank
+              assign mf = product.metafields.specs[block.settings.metafield_key].value
+              if mf != blank
+                assign body = mf
+              endif
+            endif
+          -%}
+          {%- if body != blank -%}
+            <details {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.heading }}</summary>
+              <div class="facts__body rte">{{ body }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" }
+      ],
+      "default": "fog"
+    },
+    { "type": "text", "id": "price_note", "label": "Price note", "default": "shipped cold" },
+    { "type": "text", "id": "ship_note", "label": "Note under the button", "default": "Ships Mon–Wed · 21+ signature required" }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Tasting notes" },
+        { "type": "richtext", "id": "text", "label": "Fallback text" },
+        {
+          "type": "text",
+          "id": "metafield_key",
+          "label": "Metafield key (specs namespace)",
+          "info": "Optional. If specs.<key> exists on the product it replaces the fallback text."
+        },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    }
+  ]
+}
+{% endschema %}

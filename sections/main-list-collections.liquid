@@ -1,0 +1,20 @@
+<section class="band scheme scheme--fog">
+  <div class="wrap">
+    <div class="band__head"><div><h2>Collections</h2></div></div>
+    <div class="brews">
+      {%- for collection in collections -%}
+        <a class="brew{% cycle ' brew--gold', ' brew--surf', ' brew--ember', ' brew--paper' %}" href="{{ collection.url }}">
+          <div><h3>{{ collection.title }}</h3></div>
+          <div class="brew__foot">
+            <span>{{ collection.products_count }} beers</span>
+            <span>Shop &rarr;</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collections list", "tag": "div", "settings": [] }
+{% endschema %}

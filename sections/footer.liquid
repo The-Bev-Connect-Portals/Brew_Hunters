@@ -1,0 +1,99 @@
+<footer class="foot scheme scheme--{{ section.settings.color_scheme | default: 'spruce' }}" id="{{ section.settings.anchor | default: 'ship' }}">
+  <div class="wrap">
+    <div class="foot__cols">
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+
+            {%- when 'text' -%}
+              <h4>{{ block.settings.heading }}</h4>
+              <p style="font-size:.95rem;opacity:.85;max-width:34ch">{{ block.settings.text }}</p>
+
+            {%- when 'menu' -%}
+              <h4>{{ block.settings.heading }}</h4>
+              <ul>
+                {%- for link in block.settings.menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'newsletter' -%}
+              <h4>{{ block.settings.heading }}</h4>
+              {%- if block.settings.text != blank -%}
+                <p style="font-size:.95rem;opacity:.85">{{ block.settings.text }}</p>
+              {%- endif -%}
+              {%- form 'customer', class: 'signup' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <label class="visually-hidden" for="newsletter-email">{{ 'general.newsletter.placeholder' | t }}</label>
+                <input id="newsletter-email" type="email" name="contact[email]"
+                       placeholder="{{ 'general.newsletter.placeholder' | t }}" autocomplete="email" required>
+                <button type="submit">{{ 'general.newsletter.submit' | t }}</button>
+                {%- if form.posted_successfully? -%}
+                  <p class="eyebrow" style="margin-top:.6rem">{{ 'general.newsletter.success' | t }}</p>
+                {%- endif -%}
+              {%- endform -%}
+
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.wordmark != blank -%}
+      <p class="foot__word" aria-hidden="true">{{ section.settings.wordmark }}</p>
+    {%- endif -%}
+
+    <div class="foot__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ section.settings.city }}</span>
+      <span>{{ settings.age_notice }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "div",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "spruce", "label": "Spruce" },
+        { "value": "surf", "label": "Surf" }
+      ],
+      "default": "spruce"
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "ship" },
+    { "type": "text", "id": "wordmark", "label": "Outline wordmark", "default": "Brew Hunters" },
+    { "type": "text", "id": "city", "label": "City line", "default": "Ventura, CA" }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Where we ship" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage." }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Get the drop list" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "New releases and limited cans, once a week." }
+      ]
+    }
+  ]
+}
+{% endschema %}

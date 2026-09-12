@@ -1,0 +1,68 @@
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'ember'
+-%}
+<section class="band band--tight-top scheme scheme--{{ scheme }}" id="{{ section.settings.anchor | default: 'mix' }}">
+  <div class="wrap mix">
+    <div class="mix__copy armed">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <div class="hero__actions">
+          <a class="cta cta--gold" href="{{ section.settings.cta_url | default: routes.root_url }}">{{ section.settings.cta_label }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="mix__art armed">
+      {%- if section.settings.image -%}
+        <img src="{{ section.settings.image | image_url: width: 840 }}"
+             alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+             width="420" height="420" loading="lazy">
+      {%- else -%}
+        {{ 'product-2' | placeholder_svg_tag }}
+      {%- endif -%}
+
+      {%- if section.settings.sticker_text != blank -%}
+        {% render 'arc-sticker',
+          text: section.settings.sticker_text,
+          ring: 'var(--spruce)',
+          ink: 'var(--gold)',
+          modifier: 'sticker--mix',
+          uid: section.id %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Build a box banner",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "ember", "label": "Ember" },
+        { "value": "surf", "label": "Surf" },
+        { "value": "spruce", "label": "Spruce" },
+        { "value": "gold", "label": "Gold" }
+      ],
+      "default": "ember"
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "mix" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Build a box" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Twelve cans. Four breweries. One flat rate." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Pull any twelve singles across the whole roster and we'll pack them into one cold box. Same shipping as a single six-pack." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Start building" },
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    { "type": "text", "id": "sticker_text", "label": "Sticker text", "default": "Mix it · Match it · Ship it ·" }
+  ],
+  "presets": [{ "name": "Build a box banner" }]
+}
+{% endschema %}

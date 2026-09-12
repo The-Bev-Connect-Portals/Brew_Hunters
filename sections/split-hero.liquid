@@ -1,0 +1,97 @@
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'gold'
+-%}
+<section class="hero scheme scheme--{{ scheme }}">
+  <div class="hero__copy">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <h1>
+      {%- if section.settings.line_1 != blank -%}<span>{{ section.settings.line_1 }}</span>{%- endif -%}
+      {%- if section.settings.line_2 != blank -%}<span class="thin">{{ section.settings.line_2 }}</span>{%- endif -%}
+      {%- if section.settings.line_3 != blank -%}<span>{{ section.settings.line_3 }}</span>{%- endif -%}
+    </h1>
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero__sub">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <div class="hero__actions">
+      {%- if section.settings.cta_label != blank -%}
+        <a class="cta" href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_label != blank -%}
+        <a class="cta cta--ghost" href="{{ section.settings.cta2_url | default: routes.root_url }}">{{ section.settings.cta2_label }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.ship_note != blank -%}
+      <p class="hero__ship">
+        <svg class="hop" style="fill:var(--clay)"><use href="#hop"/></svg>
+        {{ section.settings.ship_note }}
+      </p>
+    {%- endif -%}
+  </div>
+
+  <div class="hero__stage">
+    <div class="hero__rings" aria-hidden="true">
+      <i style="width:340px;height:340px"></i>
+      <i style="width:520px;height:520px"></i>
+      <i style="width:700px;height:700px"></i>
+    </div>
+
+    {%- if section.settings.image -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 880 }}"
+        alt="{{ section.settings.image.alt | default: section.settings.line_1 | escape }}"
+        width="440" height="440"
+        fetchpriority="high">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+
+    {%- if section.settings.sticker_text != blank -%}
+      {% render 'arc-sticker',
+        text: section.settings.sticker_text,
+        ring: 'var(--ember)',
+        ink: 'var(--fog)',
+        modifier: 'sticker--hero',
+        uid: section.id %}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Split hero",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "gold", "label": "Gold" },
+        { "value": "fog", "label": "Fog" },
+        { "value": "ember", "label": "Ember" },
+        { "value": "surf", "label": "Surf" }
+      ],
+      "default": "gold"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Central Coast craft · Est. Ventura, CA" },
+    { "type": "text", "id": "line_1", "label": "Heading line 1", "default": "Hunt down" },
+    { "type": "text", "id": "line_2", "label": "Heading line 2 (outlined)", "default": "the good" },
+    { "type": "text", "id": "line_3", "label": "Heading line 3", "default": "stuff" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Four Central Coast breweries. One cold box. Delivered to your door instead of your nearest liquor aisle." },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "cta_label", "label": "Primary button", "default": "Start the hunt" },
+    { "type": "url", "id": "cta_url", "label": "Primary button link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary button", "default": "Build a mixed box" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary button link" },
+    { "type": "text", "id": "ship_note", "label": "Shipping note", "default": "Ships cold · Tracked · 21+ signature" },
+    { "type": "text", "id": "sticker_text", "label": "Sticker text", "default": "Packed cold · Ventura, CA ·" }
+  ],
+  "presets": [{ "name": "Split hero" }]
+}
+{% endschema %}

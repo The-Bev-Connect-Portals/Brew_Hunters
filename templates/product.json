@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "notes": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Tasting notes",
+            "metafield_key": "tasting_notes",
+            "open": true
+          }
+        },
+        "ships": {
+          "type": "accordion",
+          "settings": {
+            "heading": "How it ships",
+            "text": "<p>Packed in an insulated liner with gel packs at our licensed Ventura, CA facility and handed to the carrier the same morning. Orders placed after Wednesday ship the following Monday so nothing sits in a truck over the weekend.</p>"
+          }
+        },
+        "age": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Age verification",
+            "text": "<p>Every order requires an adult 21 or over to sign at delivery. Carriers will not leave beer at the door, and IDs are checked against the name on the order.</p>"
+          }
+        }
+      },
+      "block_order": ["notes", "ships", "age"],
+      "settings": {
+        "color_scheme": "fog",
+        "price_note": "shipped cold",
+        "ship_note": "Ships Mon–Wed · 21+ signature required"
+      }
+    },
+    "related": {
+      "type": "featured-products",
+      "settings": {
+        "color_scheme": "paper",
+        "anchor": "related",
+        "limit": 4,
+        "eyebrow": "Goes well with",
+        "heading": "Fill out the box",
+        "intro": "Add two more packs and the shipping cost per beer drops by roughly a third."
+      }
+    }
+  },
+  "order": ["main", "related"]
+}

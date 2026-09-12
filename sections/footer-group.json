@@ -1,0 +1,35 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "ship": {
+          "type": "text",
+          "settings": {
+            "heading": "Where we ship",
+            "text": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage."
+          }
+        },
+        "shop": { "type": "menu", "settings": { "heading": "Shop", "menu": "footer" } },
+        "help": { "type": "menu", "settings": { "heading": "Help", "menu": "footer" } },
+        "news": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "Get the drop list",
+            "text": "New releases and limited cans, once a week."
+          }
+        }
+      },
+      "block_order": ["ship", "shop", "help", "news"],
+      "settings": {
+        "color_scheme": "spruce",
+        "anchor": "ship",
+        "wordmark": "Brew Hunters",
+        "city": "Ventura, CA"
+      }
+    }
+  },
+  "order": ["footer"]
+}

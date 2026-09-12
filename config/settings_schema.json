@@ -1,0 +1,70 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Brew Hunters",
+    "theme_version": "1.0.0",
+    "theme_author": "Go-To Gifting LLC",
+    "theme_documentation_url": "https://github.com/The-Bev-Connect-Portals/Brew_Hunters",
+    "theme_support_url": "https://github.com/The-Bev-Connect-Portals/Brew_Hunters/issues"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "Optional. Falls back to the Brew Hunters wordmark and hop icon."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "text",
+        "id": "wordmark",
+        "label": "Wordmark text",
+        "default": "Brew Hunters"
+      }
+    ]
+  },
+  {
+    "name": "Compliance",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shipping eligibility and age verification are enforced at checkout, never on the storefront. Copy here is display only."
+      },
+      {
+        "type": "text",
+        "id": "age_notice",
+        "label": "Age notice",
+        "default": "You must be 21+ to purchase · Please drink responsibly"
+      },
+      {
+        "type": "textarea",
+        "id": "shipping_notice",
+        "label": "Shipping notice",
+        "default": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage."
+      },
+      {
+        "type": "text",
+        "id": "signature_notice",
+        "label": "Signature notice",
+        "default": "Ships cold · 21+ signature required"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_cart_note",
+        "label": "Enable cart note",
+        "default": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,71 @@
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'paper'
+  assign coll = section.settings.collection
+  assign limit = section.settings.limit
+-%}
+<section class="band scheme scheme--{{ scheme }}" id="{{ section.settings.anchor | default: 'haul' }}">
+  <div class="wrap">
+    <div class="band__head armed">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow eyebrow--clay">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.intro != blank -%}<p>{{ section.settings.intro }}</p>{%- endif -%}
+    </div>
+
+    <div class="grid armed">
+      {%- if coll != blank and coll.products_count > 0 -%}
+        {%- for product in coll.products limit: limit -%}
+          {% render 'product-card', card_product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..limit) -%}
+          <article class="card">
+            <div class="card__media">{{ 'product-1' | placeholder_svg_tag }}</div>
+            <div class="card__body">
+              <p class="card__brand">{{ 'onboarding.vendor' | t }}</p>
+              <h3>{{ 'onboarding.product_title' | t }}</h3>
+              <div class="card__foot"><span class="price">{{ 1399 | money }}</span></div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.view_all and coll != blank -%}
+      <div class="hero__actions" style="margin-top:2rem">
+        <a class="cta cta--ghost" href="{{ coll.url }}">View all</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "fog", "label": "Fog" },
+        { "value": "spruce", "label": "Spruce" }
+      ],
+      "default": "paper"
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "haul" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products shown", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "In stock this week" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This week's haul" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Prices are per pack, shipped. Cans are dated at the brewery — nothing on this page is more than six weeks old." },
+    { "type": "checkbox", "id": "view_all", "label": "Show 'View all' button", "default": false }
+  ],
+  "presets": [{ "name": "Featured products" }]
+}
+{% endschema %}

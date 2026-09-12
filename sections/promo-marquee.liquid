@@ -1,0 +1,66 @@
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'spruce'
+-%}
+<div class="promo scheme scheme--{{ scheme }}" style="--speed:{{ section.settings.speed }}s" aria-label="Store announcements">
+  <div class="promo__track">
+    {%- for i in (1..2) -%}
+      <div class="promo__group"{% if forloop.index == 2 %} aria-hidden="true"{% endif %}>
+        {%- for block in section.blocks -%}
+          <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          <svg class="hop"><use href="#hop"/></svg>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promo marquee",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "spruce", "label": "Spruce" },
+        { "value": "ember", "label": "Ember" },
+        { "value": "gold", "label": "Gold" },
+        { "value": "surf", "label": "Surf" }
+      ],
+      "default": "spruce"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll duration",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "s",
+      "default": 38
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $75" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo marquee",
+      "blocks": [
+        { "type": "message", "settings": { "text": "Free shipping over $75" } },
+        { "type": "message", "settings": { "text": "Cold-packed & shipped from Ventura, CA" } },
+        { "type": "message", "settings": { "text": "Adult signature required at delivery" } },
+        { "type": "message", "settings": { "text": "Four Central Coast breweries, one box" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,103 @@
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'fog'
+-%}
+<section class="band scheme scheme--{{ scheme }}" id="{{ section.settings.anchor | default: 'breweries' }}">
+  <div class="wrap">
+    <div class="band__head armed">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow eyebrow--clay">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.intro != blank -%}<p>{{ section.settings.intro }}</p>{%- endif -%}
+    </div>
+
+    <div class="brews armed">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign target = block.settings.collection
+          assign count_label = block.settings.count_label
+          if target != blank and count_label == blank
+            assign count_label = target.products_count | append: ' beers'
+          endif
+        -%}
+        <a class="brew brew--{{ block.settings.tile_color }}"
+           href="{{ target.url | default: block.settings.url | default: routes.all_products_collection_url }}"
+           {{ block.shopify_attributes }}>
+          <div>
+            {%- if block.settings.location != blank -%}
+              <p class="eyebrow">{{ block.settings.location }}</p>
+            {%- endif -%}
+            <h3>{{ block.settings.title | default: target.title }}</h3>
+          </div>
+          <div class="brew__foot">
+            <span>{{ count_label }}</span>
+            <span>Shop &rarr;</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brewery tiles",
+  "tag": "div",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "spruce", "label": "Spruce" }
+      ],
+      "default": "fog"
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "breweries" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The roster" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Four breweries worth the drive" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Every beer on this site comes from a brewery between Vista and Buellton. We stock the flagships, the seasonals and the ones that never leave the tasting room." }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Brewery",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Title override" },
+        { "type": "text", "id": "location", "label": "Location", "default": "Ventura, CA" },
+        { "type": "text", "id": "count_label", "label": "Count label override", "info": "Leave blank to use the live product count." },
+        { "type": "url", "id": "url", "label": "Link override" },
+        {
+          "type": "select",
+          "id": "tile_color",
+          "label": "Tile color",
+          "options": [
+            { "value": "gold", "label": "Gold" },
+            { "value": "surf", "label": "Surf" },
+            { "value": "ember", "label": "Ember" },
+            { "value": "paper", "label": "Paper" }
+          ],
+          "default": "gold"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brewery tiles",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "Topa Topa Brewing Co.", "location": "Ventura & Ojai, CA", "tile_color": "gold" } },
+        { "type": "tile", "settings": { "title": "Mother Earth Brew Co.", "location": "Vista, CA", "tile_color": "surf" } },
+        { "type": "tile", "settings": { "title": "Figueroa Mountain", "location": "Buellton, CA", "tile_color": "ember" } },
+        { "type": "tile", "settings": { "title": "Rincon Brewery", "location": "Carpinteria, CA", "tile_color": "paper" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

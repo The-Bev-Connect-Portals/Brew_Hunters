@@ -1,0 +1,58 @@
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'paper'
+-%}
+<section class="band scheme scheme--{{ scheme }}">
+  <div class="wrap">
+    <div class="band__head">
+      <div>
+        <p class="eyebrow eyebrow--clay">{{ collection.products_count }} beers</p>
+        <h2>{{ collection.title }}</h2>
+      </div>
+      {%- if collection.description != blank -%}
+        <div class="rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- paginate collection.products by 24 -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="grid armed">
+          {%- for product in collection.products -%}
+            {% render 'product-card', card_product: product %}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <div class="hero__actions" style="margin-top:2.4rem;justify-content:center">
+            {%- if paginate.previous -%}
+              <a class="cta cta--ghost" href="{{ paginate.previous.url }}">{{ 'general.pagination.previous' | t }}</a>
+            {%- endif -%}
+            {%- if paginate.next -%}
+              <a class="cta cta--ghost" href="{{ paginate.next.url }}">{{ 'general.pagination.next' | t }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <p class="pdp__rowlabel">Nothing in this collection yet.</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "fog", "label": "Fog" }
+      ],
+      "default": "paper"
+    }
+  ]
+}
+{% endschema %}

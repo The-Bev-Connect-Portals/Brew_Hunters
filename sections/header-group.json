@@ -1,0 +1,22 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "promo": {
+      "type": "promo-marquee",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "Free shipping over $75" } },
+        "m2": { "type": "message", "settings": { "text": "Cold-packed & shipped from Ventura, CA" } },
+        "m3": { "type": "message", "settings": { "text": "Adult signature required at delivery" } },
+        "m4": { "type": "message", "settings": { "text": "Four Central Coast breweries, one box" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4"],
+      "settings": { "color_scheme": "spruce", "speed": 38 }
+    },
+    "header": {
+      "type": "header",
+      "settings": { "menu": "main-menu" }
+    }
+  },
+  "order": ["promo", "header"]
+}

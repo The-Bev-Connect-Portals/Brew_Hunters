@@ -1,0 +1,47 @@
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="mark" href="{{ routes.root_url }}">
+      {%- if settings.logo -%}
+        <img src="{{ settings.logo | image_url: width: 320 }}" alt="{{ shop.name | escape }}" width="160" height="44">
+      {%- else -%}
+        <svg><use href="#hop"/></svg>{{ settings.wordmark | default: shop.name }}
+      {%- endif -%}
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="hdr__right">
+      <button class="hdr__toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-drawer">
+        {{ 'accessibility.menu' | t }}
+      </button>
+      <a class="bag" href="{{ routes.cart_url }}">
+        Cart · <span data-cart-count>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="wrap hdr__drawer" id="nav-drawer">
+    {%- for link in section.settings.menu.links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

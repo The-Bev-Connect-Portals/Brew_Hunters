@@ -1,0 +1,22 @@
+{%- comment -%}
+  Rotating arc-text sticker.
+  Accepts: text, ring (hex/var), ink (hex/var), modifier, uid
+{%- endcomment -%}
+{%- liquid
+  assign sticker_text = text | default: 'Packed cold · Ventura, CA ·'
+  assign ring_color = ring | default: 'var(--ember)'
+  assign ink_color = ink | default: 'var(--fog)'
+  assign arc_id = 'arc-' | append: uid | default: 'arc-1'
+-%}
+<div class="sticker {{ modifier }}" aria-hidden="true">
+  <svg viewBox="0 0 120 120">
+    <g class="sticker__ring">
+      <circle cx="60" cy="60" r="56" fill="{{ ring_color }}" stroke="{{ ink_color }}" stroke-width="2"/>
+      <path id="{{ arc_id }}" d="M60,60 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0" fill="none"/>
+      <text fill="{{ ink_color }}">
+        <textPath href="#{{ arc_id }}" startOffset="50%" text-anchor="middle">{{ sticker_text }}</textPath>
+      </text>
+    </g>
+    <use href="#hop" x="46" y="46" width="28" height="28" fill="{{ ink_color }}"/>
+  </svg>
+</div>

@@ -1,0 +1,66 @@
+<section class="band scheme scheme--fog">
+  <div class="wrap">
+    <div class="band__head">
+      <div><h2>{{ 'cart.general.title' | t }}</h2></div>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <p class="pdp__rowlabel">{{ 'cart.general.empty' | t }}</p>
+      <div class="hero__actions" style="margin-top:1.4rem">
+        <a class="cta" href="{{ routes.all_products_collection_url }}">{{ 'cart.general.continue_shopping' | t }}</a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        {%- for item in cart.items -%}
+          <div class="cart__row">
+            <div class="cart__img">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title | escape }}" width="90" height="90" loading="lazy">
+              {%- endif -%}
+            </div>
+            <div>
+              <b><a href="{{ item.url }}" style="text-decoration:none">{{ item.product.title }}</a></b>
+              {%- unless item.product.has_only_default_variant -%}
+                <div class="cart__props">{{ item.variant.title }}</div>
+              {%- endunless -%}
+              {%- if item.selling_plan_allocation -%}
+                <div class="cart__props">{{ item.selling_plan_allocation.selling_plan.name }}</div>
+              {%- endif -%}
+              {%- if item.properties != blank -%}
+                <div class="cart__props">
+                  {%- for prop in item.properties -%}
+                    {%- if prop.last != blank and prop.first == 'Cans' -%}
+                      {{ prop.last }}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+            <div>
+              <label class="visually-hidden" for="qty-{{ item.index }}">{{ 'products.product.quantity' | t }}</label>
+              <input id="qty-{{ item.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0"
+                     style="width:64px;padding:.4em;border:2px solid var(--spruce);border-radius:8px;font-family:var(--mono)">
+            </div>
+            <div><span class="price">{{ item.final_line_price | money }}</span></div>
+          </div>
+        {%- endfor -%}
+
+        <div class="cart__foot">
+          <div>
+            <p class="tray__count">{{ 'cart.general.subtotal' | t }} {{ cart.total_price | money }}</p>
+            <p class="pdp__rowlabel">{{ 'cart.general.taxes_and_shipping' | t }}</p>
+            <p class="pdp__rowlabel">{{ settings.signature_notice }}</p>
+          </div>
+          <div class="hero__actions">
+            <button class="cta cta--ghost" type="submit" name="update">Update</button>
+            <button class="cta" type="submit" name="checkout">{{ 'cart.general.checkout' | t }}</button>
+          </div>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Cart", "tag": "div", "settings": [] }
+{% endschema %}

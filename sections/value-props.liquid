@@ -1,0 +1,89 @@
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'fog'
+  assign pad = ''
+  if section.settings.flush_top
+    assign pad = 'band--flush-top'
+  endif
+-%}
+<section class="band {{ pad }} scheme scheme--{{ scheme }}">
+  <div class="wrap">
+    <div class="props armed">
+      {%- for block in section.blocks -%}
+        <div class="prop" {{ block.shopify_attributes }}>
+          <svg viewBox="0 0 24 24">
+            {%- case block.settings.icon -%}
+              {%- when 'cold' -%}<path d="M12 2v20M5 6l7 4 7-4M5 18l7-4 7 4M2 12h20"/>
+              {%- when 'brewery' -%}<path d="M3 21V10l9-7 9 7v11M9 21v-7h6v7"/>
+              {%- when 'shield' -%}<path d="M12 3 4 7v5c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-4"/>
+              {%- when 'box' -%}<path d="M4 4h16v4H4zM6 8v12h12V8M10 12h4"/>
+              {%- else -%}<path d="M12 2v20M5 6l7 4 7-4M5 18l7-4 7 4M2 12h20"/>
+            {%- endcase -%}
+          </svg>
+          <b>{{ block.settings.title }}</b>
+          <span>{{ block.settings.text }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Value props",
+  "tag": "div",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "spruce", "label": "Spruce" }
+      ],
+      "default": "fog"
+    },
+    {
+      "type": "checkbox",
+      "id": "flush_top",
+      "label": "Remove top padding",
+      "info": "Use when this section sits directly under a wave divider.",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "prop",
+      "name": "Prop",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "cold", "label": "Cold chain" },
+            { "value": "brewery", "label": "Brewery" },
+            { "value": "shield", "label": "Age check" },
+            { "value": "box", "label": "Box" }
+          ],
+          "default": "cold"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Cold chain, start to stoop" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Insulated liner and gel packs on every order, packed the morning it ships." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Value props",
+      "blocks": [
+        { "type": "prop", "settings": { "icon": "cold", "title": "Cold chain, start to stoop", "text": "Insulated liner and gel packs on every order, packed the morning it ships." } },
+        { "type": "prop", "settings": { "icon": "brewery", "title": "Straight from the brewery", "text": "We buy direct from each brewery — no distributor warehouse detour." } },
+        { "type": "prop", "settings": { "icon": "shield", "title": "21+ signature at the door", "text": "Every box is age-verified on delivery. No exceptions, no doorstep drops." } },
+        { "type": "prop", "settings": { "icon": "box", "title": "Mix your own 12", "text": "Pull cans from all four breweries into one box at a single flat rate." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
