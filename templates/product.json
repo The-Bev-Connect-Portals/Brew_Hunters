@@ -26,7 +26,11 @@
           }
         }
       },
-      "block_order": ["notes", "ships", "age"],
+      "block_order": [
+        "notes",
+        "ships",
+        "age"
+      ],
       "settings": {
         "color_scheme": "fog",
         "price_note": "shipped cold",
@@ -41,9 +45,13 @@
         "limit": 4,
         "eyebrow": "Goes well with",
         "heading": "Fill out the box",
-        "intro": "Add two more packs and the shipping cost per beer drops by roughly a third."
+        "intro": "Add two more packs and the shipping cost per beer drops by roughly a third.",
+        "collection": "all-beer"
       }
     }
   },
-  "order": ["main", "related"]
+  "order": [
+    "main",
+    "related"
+  ]
 }

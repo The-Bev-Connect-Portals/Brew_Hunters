@@ -12,33 +12,113 @@
         "cta_label": "Start the hunt",
         "cta2_label": "Build a mixed box",
         "ship_note": "Ships cold · Tracked · 21+ signature",
-        "sticker_text": "Packed cold · Ventura, CA ·"
+        "sticker_text": "Packed cold · Ventura, CA ·",
+        "cta_url": "/collections/all-beer",
+        "cta2_url": "/pages/build-a-box"
       }
     },
     "wave_1": {
       "type": "wave-divider",
-      "settings": { "shape": "a", "color_back": "clay", "color_mid": "ember", "color_front": "fog" }
+      "settings": {
+        "shape": "a",
+        "color_back": "clay",
+        "color_mid": "ember",
+        "color_front": "fog"
+      }
     },
     "props": {
       "type": "value-props",
       "blocks": {
-        "p1": { "type": "prop", "settings": { "icon": "cold", "title": "Cold chain, start to stoop", "text": "Insulated liner and gel packs on every order, packed the morning it ships." } },
-        "p2": { "type": "prop", "settings": { "icon": "brewery", "title": "Straight from the brewery", "text": "We buy direct from each brewery — no distributor warehouse detour." } },
-        "p3": { "type": "prop", "settings": { "icon": "shield", "title": "21+ signature at the door", "text": "Every box is age-verified on delivery. No exceptions, no doorstep drops." } },
-        "p4": { "type": "prop", "settings": { "icon": "box", "title": "Mix your own 12", "text": "Pull cans from all four breweries into one box at a single flat rate." } }
+        "p1": {
+          "type": "prop",
+          "settings": {
+            "icon": "cold",
+            "title": "Cold chain, start to stoop",
+            "text": "Insulated liner and gel packs on every order, packed the morning it ships."
+          }
+        },
+        "p2": {
+          "type": "prop",
+          "settings": {
+            "icon": "brewery",
+            "title": "Straight from the brewery",
+            "text": "We buy direct from each brewery — no distributor warehouse detour."
+          }
+        },
+        "p3": {
+          "type": "prop",
+          "settings": {
+            "icon": "shield",
+            "title": "21+ signature at the door",
+            "text": "Every box is age-verified on delivery. No exceptions, no doorstep drops."
+          }
+        },
+        "p4": {
+          "type": "prop",
+          "settings": {
+            "icon": "box",
+            "title": "Mix your own 12",
+            "text": "Pull cans from all four breweries into one box at a single flat rate."
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3", "p4"],
-      "settings": { "color_scheme": "fog", "flush_top": true }
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "color_scheme": "fog",
+        "flush_top": true
+      }
     },
     "breweries": {
       "type": "brewery-tiles",
       "blocks": {
-        "b1": { "type": "tile", "settings": { "title": "Topa Topa Brewing Co.", "location": "Ventura & Ojai, CA", "tile_color": "gold" } },
-        "b2": { "type": "tile", "settings": { "title": "Mother Earth Brew Co.", "location": "Vista, CA", "tile_color": "surf" } },
-        "b3": { "type": "tile", "settings": { "title": "Figueroa Mountain", "location": "Buellton, CA", "tile_color": "ember" } },
-        "b4": { "type": "tile", "settings": { "title": "Rincon Brewery", "location": "Carpinteria, CA", "tile_color": "paper" } }
+        "b1": {
+          "type": "tile",
+          "settings": {
+            "title": "Topa Topa Brewing Co.",
+            "location": "Ventura & Ojai, CA",
+            "tile_color": "gold",
+            "collection": "topa-topa-brewing-co"
+          }
+        },
+        "b2": {
+          "type": "tile",
+          "settings": {
+            "title": "Mother Earth Brew Co.",
+            "location": "Vista, CA",
+            "tile_color": "surf",
+            "collection": "mother-earth-brew-co"
+          }
+        },
+        "b3": {
+          "type": "tile",
+          "settings": {
+            "title": "Figueroa Mountain",
+            "location": "Buellton, CA",
+            "tile_color": "ember",
+            "collection": "figueroa-mountain-brew-co"
+          }
+        },
+        "b4": {
+          "type": "tile",
+          "settings": {
+            "title": "Rincon Brewery",
+            "location": "Carpinteria, CA",
+            "tile_color": "paper",
+            "collection": "rincon-brewery"
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3", "b4"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
       "settings": {
         "color_scheme": "fog",
         "anchor": "breweries",
@@ -56,12 +136,18 @@
         "eyebrow": "In stock this week",
         "heading": "This week's haul",
         "intro": "Prices are per pack, shipped. Cans are dated at the brewery — nothing on this page is more than six weeks old.",
-        "view_all": true
+        "view_all": true,
+        "collection": "all-beer"
       }
     },
     "wave_2": {
       "type": "wave-divider",
-      "settings": { "shape": "b", "color_back": "gold", "color_mid": "clay", "color_front": "ember" }
+      "settings": {
+        "shape": "b",
+        "color_back": "gold",
+        "color_mid": "clay",
+        "color_front": "ember"
+      }
     },
     "mix": {
       "type": "build-a-box-banner",
@@ -72,7 +158,8 @@
         "heading": "Twelve cans. Four breweries. One flat rate.",
         "text": "Pull any twelve singles across the whole roster and we'll pack them into one cold box. Same shipping as a single six-pack.",
         "cta_label": "Start building",
-        "sticker_text": "Mix it · Match it · Ship it ·"
+        "sticker_text": "Mix it · Match it · Ship it ·",
+        "cta_url": "/pages/build-a-box"
       }
     },
     "review": {
@@ -86,5 +173,14 @@
       }
     }
   },
-  "order": ["hero", "wave_1", "props", "breweries", "haul", "wave_2", "mix", "review"]
+  "order": [
+    "hero",
+    "wave_1",
+    "props",
+    "breweries",
+    "haul",
+    "wave_2",
+    "mix",
+    "review"
+  ]
 }

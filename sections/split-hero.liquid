@@ -47,6 +47,13 @@
         alt="{{ section.settings.image.alt | default: section.settings.line_1 | escape }}"
         width="440" height="440"
         fetchpriority="high">
+    {%- elsif section.settings.fallback_asset != blank -%}
+      {%- comment -%} Ships with the theme so the hero renders before anyone opens the editor. {%- endcomment -%}
+      <img
+        src="{{ section.settings.fallback_asset | asset_url }}"
+        alt="{{ section.settings.fallback_alt | escape }}"
+        width="440" height="440"
+        fetchpriority="high">
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag }}
     {%- endif -%}
@@ -85,6 +92,8 @@
     { "type": "text", "id": "line_3", "label": "Heading line 3", "default": "stuff" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Four Central Coast breweries. One cold box. Delivered to your door instead of your nearest liquor aisle." },
     { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "fallback_asset", "label": "Fallback theme asset", "info": "Filename in assets/. Used only when no hero image is chosen above.", "default": "hero-chief-peak.webp" },
+    { "type": "text", "id": "fallback_alt", "label": "Fallback image alt text", "default": "Topa Topa Chief Peak IPA six-pack" },
     { "type": "text", "id": "cta_label", "label": "Primary button", "default": "Start the hunt" },
     { "type": "url", "id": "cta_url", "label": "Primary button link" },
     { "type": "text", "id": "cta2_label", "label": "Secondary button", "default": "Build a mixed box" },

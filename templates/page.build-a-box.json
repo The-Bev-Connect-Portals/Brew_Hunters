@@ -3,11 +3,33 @@
     "builder": {
       "type": "build-a-box",
       "blocks": {
-        "k1": { "type": "preset", "settings": { "label": "IPA hunt", "tag": "ipa" } },
-        "k2": { "type": "preset", "settings": { "label": "Easy drinking", "tag": "lager" } },
-        "k3": { "type": "preset", "settings": { "label": "Brewery tour", "tag": "__tour" } }
+        "k1": {
+          "type": "preset",
+          "settings": {
+            "label": "IPA hunt",
+            "tag": "ipa"
+          }
+        },
+        "k2": {
+          "type": "preset",
+          "settings": {
+            "label": "Easy drinking",
+            "tag": "lager"
+          }
+        },
+        "k3": {
+          "type": "preset",
+          "settings": {
+            "label": "Brewery tour",
+            "tag": "__tour"
+          }
+        }
       },
-      "block_order": ["k1", "k2", "k3"],
+      "block_order": [
+        "k1",
+        "k2",
+        "k3"
+      ],
       "settings": {
         "color_scheme": "fog",
         "capacity": 12,
@@ -15,9 +37,13 @@
         "heading": "Build your box",
         "intro": "Pick any twelve singles across all four breweries. One flat rate for the box, shipped cold — same rate no matter what you put in it.",
         "tray_label": "Your box",
-        "preset_label": "Quick fill"
+        "preset_label": "Quick fill",
+        "collection": "all-beer",
+        "box_product": "build-your-own-12-can-box"
       }
     }
   },
-  "order": ["builder"]
+  "order": [
+    "builder"
+  ]
 }
