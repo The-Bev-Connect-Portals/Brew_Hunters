@@ -1,0 +1,178 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+BH BEER BUILDER  v1.0  (2026-09-16)
+----------------------------------------------------------------------------------------------------------------------
+Build-your-own beer sampler. Port of BroBasket's Build Your Own Basket flow
+(sections/bb-builder.liquid + assets/bb-builder.js, jgrasty123/Shopify_Brobasket).
+
+HOW IT WORKS (same as BroBasket)
+  * Every can the customer picks goes into the cart as its OWN line at its own
+    single price. No bundle product, no parent/child SKU, no flat rate.
+    Inventory decrements per can.
+  * Every line carries the properties `Bundle` (section setting) and `Box ID`,
+    plus `Box Size`, so the pack bench can see which cans ship together.
+  * Steps and filters come from snippets/bh-builder-config.liquid.
+  * Product cards come from sections/bh-builder-grid.liquid over the Section
+    Rendering API.
+
+WHAT CHANGED FOR BEER
+  * Step 1 picks the box size; the beer step needs exactly that many cans.
+  * No greeting-card product, no basket container, no adult-signature fee SKU.
+    The signature requirement is shown from settings.signature_notice.
+
+Replaces the flat-rate sections/build-a-box.liquid on page.build-a-box.
+----------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{{ 'bh-builder.css' | asset_url | stylesheet_tag }}
+
+{%- render 'bh-builder-config',
+  bundle_name: section.settings.bundle_name,
+  sizes: section.settings.sizes,
+  source: section.settings.source_handle
+-%}
+
+{%- assign scheme = section.settings.color_scheme | default: 'fog' -%}
+
+<section class="band scheme scheme--{{ scheme }} bhb" data-bb-builder aria-label="Build your own beer box" style="padding-top:1.5rem">
+  <div class="wrap">
+
+    <div class="band__head bhb__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow eyebrow--clay">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.intro != blank -%}<p>{{ section.settings.intro }}</p>{%- endif -%}
+    </div>
+
+    <nav class="bhb-steps" data-bb-steps aria-label="Builder steps"></nav>
+
+    <div class="bhb-sizes" data-bb-sizes hidden>
+      <p class="bhb-field__label">How many cans?</p>
+      <div class="bhb-sizes__grid" data-bb-size-options></div>
+      <p class="bhb-field__hint">You'll pick exactly this many. Each can is priced individually.</p>
+    </div>
+
+    <div class="bhb-toolbar" data-bb-toolbar>
+      <button type="button" class="bhb-filters-toggle" data-bb-filters-open hidden>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 5h16M5 10h10M8 15h4" stroke-linecap="round"/></svg>
+        <span>Filters</span>
+        <span class="bhb-filters-toggle__count" data-bb-filter-count hidden>0</span>
+      </button>
+      <label class="bhb-search">
+        <span class="visually-hidden">Search beers</span>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="m13.5 13.5 3.5 3.5" stroke-linecap="round"/></svg>
+        <input type="search" data-bb-search placeholder="Search beers" autocomplete="off" enterkeyhint="search">
+      </label>
+    </div>
+
+    <p class="bhb-status" data-bb-status role="status" aria-live="polite"></p>
+
+    <div data-bb-grid-mount></div>
+
+    <div class="bhb-more">
+      <button type="button" class="cta cta--ghost" data-bb-load-more hidden>Load more</button>
+    </div>
+
+    <div class="bhb-message" data-bb-message hidden>
+      <div class="bhb-message__fields" data-bb-msg-fields>
+        <label class="bhb-field">
+          <span class="bhb-field__label">Who is it for?</span>
+          <input type="text" data-bb-msg-to maxlength="80" placeholder="Recipient name">
+        </label>
+        <label class="bhb-field">
+          <span class="bhb-field__label">Your note</span>
+          <textarea data-bb-msg-body rows="5" maxlength="400" placeholder="Printed and packed with the box"></textarea>
+          <span class="bhb-field__hint"><span data-bb-msg-remaining>400</span> characters left</span>
+        </label>
+        <label class="bhb-field">
+          <span class="bhb-field__label">From</span>
+          <input type="text" data-bb-msg-from maxlength="80" placeholder="Your name">
+        </label>
+      </div>
+    </div>
+
+    <div class="bhb-summary" data-bb-summary-panel hidden></div>
+  </div>
+
+  <div class="bhb-drawer-scrim" data-bb-filters-close hidden></div>
+  <aside class="bhb-drawer" data-bb-drawer aria-label="Filters" hidden>
+    <div class="bhb-drawer__head">
+      <h3>Filters</h3>
+      <button type="button" class="bhb-drawer__clear" data-bb-filters-clear>Clear</button>
+      <button type="button" class="bhb-drawer__close" data-bb-filters-close aria-label="Close filters">&times;</button>
+    </div>
+    <div data-bb-filter-groups></div>
+  </aside>
+
+  <div class="bhb-qv-scrim" data-bb-qv-close hidden></div>
+  <div class="bhb-qv" data-bb-qv role="dialog" aria-modal="true" aria-labelledby="bhb-qv-title" tabindex="-1" hidden>
+    <button type="button" class="bhb-qv__close" data-bb-qv-close aria-label="Close">&times;</button>
+    <div class="bhb-qv__body" data-bb-qv-body></div>
+  </div>
+
+  <div class="bhb-boxbar">
+    <div class="bhb-boxbar__inner wrap">
+      <span class="bhb-boxbar__label" data-bb-box-label>Box 1</span>
+      <div class="bhb-boxbar__items" data-bb-box>
+        <p class="bhb-boxbar__empty" data-bb-box-empty>Your box is empty.</p>
+      </div>
+      <div class="bhb-boxbar__totals">
+        <span class="bhb-boxbar__count" data-bb-box-count>0 cans</span>
+        <span class="bhb-boxbar__total" data-bb-box-total></span>
+      </div>
+      <div class="bhb-boxbar__actions">
+        <button type="button" class="cta cta--ghost" data-bb-back hidden>Back</button>
+        <button type="button" class="cta cta--ghost" data-bb-add-box hidden>Start another box</button>
+        <button type="button" class="cta cta--gold" data-bb-next disabled>Continue</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'bh-builder.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Beer box builder",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "fog", "label": "Fog" },
+        { "value": "paper", "label": "Paper" }
+      ],
+      "default": "fog"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Build your own sampler" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Build your box" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Pick a box size, then fill it with any singles from our Central Coast and partner breweries. You pay the single-can price for each beer." },
+    {
+      "type": "text",
+      "id": "sizes",
+      "label": "Box sizes",
+      "info": "Comma-separated can counts, e.g. 6,12",
+      "default": "6,12"
+    },
+    {
+      "type": "text",
+      "id": "source_handle",
+      "label": "Source collection handle",
+      "info": "Collection of pickable singles. Only products tagged bh:byo are shown.",
+      "default": "byo-singles"
+    },
+    {
+      "type": "text",
+      "id": "bundle_name",
+      "label": "Bundle name",
+      "info": "Written to every line item as the Bundle property. Changing it splits boxes already in customers' carts.",
+      "default": "Build Your Own Beer Box"
+    }
+  ],
+  "presets": [{ "name": "Beer box builder" }]
+}
+{% endschema %}

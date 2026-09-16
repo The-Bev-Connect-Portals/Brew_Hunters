@@ -1,0 +1,75 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+BH BUILDER GRID  v1.0  (2026-09-16)
+----------------------------------------------------------------------------------------------------------------------
+Port of BroBasket's sections/bb-builder-grid.liquid. One page of pickable cans,
+fetched by assets/bh-builder.js through the Section Rendering API. Never placed
+on a page in the editor.
+
+    /collections/byo-singles?section_id=bh-builder-grid
+    /collections/byo-rincon?section_id=bh-builder-grid&page=2
+    /search?q=ipa&type=product&section_id=bh-builder-grid
+
+The URL is the query: Shopify does pagination, sorting and search. Two
+near-identical branches because `paginate` only accepts a direct object path.
+
+OUTPUT CONTRACT
+  <div data-bb-grid-meta> JSON paging state, then <ul data-bb-grid> of cards.
+----------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- liquid
+  assign per_page = section.settings.products_per_page | default: 24
+-%}
+
+{%- if collection != blank and collection.handle != blank -%}
+  {%- paginate collection.products by per_page -%}
+    {%- liquid
+      assign has_next = false
+      if paginate.next != blank
+        assign has_next = true
+      endif
+      assign next_page = paginate.current_page | plus: 1
+      assign handle_json = collection.handle | json
+    -%}
+    <div data-bb-grid-meta>{"kind":"collection","handle":{{ handle_json }},"count":{{ paginate.items }},"page":{{ paginate.current_page }},"pages":{{ paginate.pages }},"has_next":{{ has_next }},"next_page":{% if has_next %}{{ next_page }}{% else %}null{% endif %}}</div>
+    <ul data-bb-grid class="bhb-grid" role="list">
+      {%- for product in collection.products -%}
+        {%- render 'bh-builder-card', product: product -%}
+      {%- endfor -%}
+    </ul>
+  {%- endpaginate -%}
+
+{%- elsif search != blank and search.performed -%}
+  {%- paginate search.results by per_page -%}
+    {%- liquid
+      assign has_next = false
+      if paginate.next != blank
+        assign has_next = true
+      endif
+      assign next_page = paginate.current_page | plus: 1
+      assign terms_json = search.terms | json
+    -%}
+    <div data-bb-grid-meta>{"kind":"search","handle":{{ terms_json }},"count":{{ paginate.items }},"page":{{ paginate.current_page }},"pages":{{ paginate.pages }},"has_next":{{ has_next }},"next_page":{% if has_next %}{{ next_page }}{% else %}null{% endif %}}</div>
+    <ul data-bb-grid class="bhb-grid" role="list">
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {%- render 'bh-builder-card', product: item -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endpaginate -%}
+
+{%- else -%}
+  <div data-bb-grid-meta>{"kind":"none","handle":"","count":0,"page":1,"pages":0,"has_next":false,"next_page":null}</div>
+  <ul data-bb-grid class="bhb-grid" role="list"></ul>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Beer builder grid",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 12, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

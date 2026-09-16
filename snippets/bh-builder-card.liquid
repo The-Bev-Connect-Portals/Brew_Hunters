@@ -1,0 +1,79 @@
+{%- comment -%}
+  BH BUILDER CARD  v1.0  (2026-09-16)
+  One pickable can for the builder grid. Port of BroBasket's
+  snippets/bb-builder-card.liquid, restyled for Brew Hunters.
+
+    {%- render 'bh-builder-card', product: product -%}
+
+  A snippet because sections/bh-builder-grid.liquid needs two `paginate`
+  blocks (collection and search) — paginate only accepts a direct object path.
+
+  Only products tagged `bh:byo` render, so a customer searching the whole
+  store from inside the builder never sees 6-packs, gift boxes or other
+  products that were not meant to go in a sampler.
+{%- endcomment -%}
+
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign alt_text = product.title | escape
+  assign display_title = product.title | split: ' - Single' | first
+  comment
+    Titles lead with the brewery ("Rincon Brewery - Merrick Lager"); the card
+    already shows the vendor above the name, so drop the repeat.
+  endcomment
+  assign vendor_prefix = product.vendor | append: ' - '
+  if display_title contains vendor_prefix
+    assign display_title = display_title | remove_first: vendor_prefix
+  endif
+-%}
+
+{%- if v != blank and product.tags contains 'bh:byo' -%}
+  {%- liquid
+    assign can_size = ''
+    if product.tags contains '16oz'
+      assign can_size = '16oz'
+    elsif product.tags contains '12oz'
+      assign can_size = '12oz'
+    endif
+  -%}
+  <li class="bhb-card"
+      data-bb-product
+      data-product-id="{{ product.id }}"
+      data-variant-id="{{ v.id }}"
+      data-handle="{{ product.handle }}"
+      data-title="{{ display_title | escape }}"
+      data-vendor="{{ product.vendor | escape }}"
+      data-price="{{ v.price }}"
+      data-available="{{ v.available }}">
+
+    <div class="bhb-card__media">
+      {%- if product.featured_media != blank -%}
+        {{ product.featured_media | image_url: width: 400 | image_tag:
+             loading: 'lazy',
+             widths: '200,300,400',
+             sizes: '(min-width: 750px) 200px, 45vw',
+             alt: alt_text,
+             class: 'bhb-card__image' }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'bhb-card__image' }}
+      {%- endif -%}
+      <button type="button" class="bhb-card__view" data-bb-view
+              aria-label="View details for {{ alt_text }}">
+        <span>Details</span>
+      </button>
+    </div>
+
+    <div class="bhb-card__info">
+      <p class="bhb-card__brand">{{ product.vendor }}</p>
+      <p class="bhb-card__title">{{ display_title }}</p>
+      <div class="bhb-card__row">
+        <span class="bhb-card__price">{{ v.price | money }}</span>
+        {%- if can_size != blank -%}<i class="bhb-card__size">{{ can_size }}</i>{%- endif -%}
+      </div>
+    </div>
+
+    <button type="button" class="bhb-card__add" data-bb-add {% unless v.available %}disabled{% endunless %}>
+      {%- if v.available -%}Add{%- else -%}Sold out{%- endif -%}
+    </button>
+  </li>
+{%- endif -%}
