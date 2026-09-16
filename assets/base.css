@@ -105,6 +105,19 @@ p{margin:0}
 .nav{display:flex;gap:1.6rem}
 .nav a{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:.95rem;text-decoration:none;letter-spacing:.01em}
 .nav a:hover{color:var(--ember)}
+.nav{align-items:center;gap:clamp(.9rem,1.8vw,1.6rem)}
+.nav>a,.nav__dd summary{white-space:nowrap}
+.nav__dd{position:relative}
+.nav__dd summary{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:.95rem;letter-spacing:.01em;cursor:pointer;list-style:none;display:flex;align-items:center;gap:.35em}
+.nav__dd summary::-webkit-details-marker{display:none}
+.nav__dd summary::after{content:"";width:.45em;height:.45em;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-.15em) rotate(45deg);transition:transform .15s}
+.nav__dd[open] summary::after{transform:translateY(.1em) rotate(-135deg)}
+.nav__dd summary:hover{color:var(--ember)}
+.nav__panel{position:absolute;top:calc(100% + .85rem);left:-1rem;min-width:16rem;background:var(--paper);border:2px solid var(--spruce);border-radius:12px;padding:.5rem;display:flex;flex-direction:column;box-shadow:4px 4px 0 var(--spruce);z-index:50}
+.nav__panel a{padding:.55rem .75rem;border-radius:8px;font-size:.85rem;white-space:nowrap}
+.nav__panel a:hover,.nav__panel a:focus-visible{background:var(--fog)}
+.nav a[aria-current],.nav__dd summary[aria-current]{color:var(--ember)}
+@media(prefers-reduced-motion:reduce){.nav__dd summary::after{transition:none}}
 .mark{
   font-family:var(--display);font-weight:800;text-transform:uppercase;
   font-size:clamp(1.25rem,3.4vw,1.7rem);letter-spacing:-.03em;line-height:1;
@@ -122,6 +135,9 @@ p{margin:0}
 .hdr__drawer{display:none;border-top:2px solid var(--spruce);padding-block:1rem}
 .hdr__drawer[open]{display:block}
 .hdr__drawer a{display:block;padding:.6rem 0;font-family:var(--display);font-weight:700;text-transform:uppercase;text-decoration:none}
+.hdr__drawer-head{margin:0;padding:.6rem 0 .2rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay)}
+.hdr__drawer-sub{padding-left:1rem;border-left:2px solid var(--spruce);margin-bottom:.4rem}
+.hdr__drawer-sub a{padding:.45rem 0;font-size:.9rem}
 @media(max-width:860px){
   .nav{display:none}
   .hdr__toggle{display:inline-block}

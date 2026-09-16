@@ -10,7 +10,18 @@
 
     <nav class="nav" aria-label="Main">
       {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- if link.links.size > 0 -%}
+          <details class="nav__dd" data-nav-dd>
+            <summary{% if link.child_active %} aria-current="true"{% endif %}>{{ link.title }}</summary>
+            <div class="nav__panel">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}"{% if child.active %} aria-current="page"{% endif %}>{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          </details>
+        {%- else -%}
+          <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endif -%}
       {%- endfor -%}
     </nav>
 
@@ -26,7 +37,16 @@
 
   <div class="wrap hdr__drawer" id="nav-drawer">
     {%- for link in section.settings.menu.links -%}
-      <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- if link.links.size > 0 -%}
+        <p class="hdr__drawer-head">{{ link.title }}</p>
+        <div class="hdr__drawer-sub">
+          {%- for child in link.links -%}
+            <a href="{{ child.url }}">{{ child.title }}</a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endif -%}
     {%- endfor -%}
   </div>
 </header>
