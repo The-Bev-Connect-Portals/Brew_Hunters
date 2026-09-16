@@ -25,6 +25,25 @@
     });
   }
 
+  /* ---------------- desktop nav dropdowns ---------------- */
+  var dds = document.querySelectorAll('[data-nav-dd]');
+  if (dds.length) {
+    var closeAll = function (except) {
+      dds.forEach(function (d) { if (d !== except) d.removeAttribute('open'); });
+    };
+    dds.forEach(function (d) {
+      d.addEventListener('toggle', function () { if (d.open) closeAll(d); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('[data-nav-dd]')) closeAll();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var open = document.querySelector('[data-nav-dd][open]');
+      if (open) { open.removeAttribute('open'); open.querySelector('summary').focus(); }
+    });
+  }
+
   /* ---------------- cart drawer ---------------- */
   var drawer   = document.querySelector('[data-cart-drawer]');
   var scrim    = document.querySelector('[data-scrim]');
