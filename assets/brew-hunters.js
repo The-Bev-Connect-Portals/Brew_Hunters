@@ -60,6 +60,12 @@
         .filter(Boolean)
         .join(', ');
 
+      // Beer box builder lines (sections/bh-builder.liquid): show which box.
+      var p = item.properties || {};
+      if (p['Box ID']) {
+        props = (props ? props + ' · ' : '') + 'Box ' + p['Box ID'] + (p['Box Size'] ? ' (' + p['Box Size'] + ')' : '');
+      }
+
       var meta = [];
       if (item.variant_title && item.variant_title !== 'Default Title') meta.push(item.variant_title);
       if (item.selling_plan_allocation) meta.push(item.selling_plan_allocation.selling_plan.name);

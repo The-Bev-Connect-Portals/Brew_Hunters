@@ -63,7 +63,8 @@ Type: Bricolage Grotesque 800 (display) / Hanken Grotesk (body) / DM Mono
 | `featured-products` | Falls back to placeholder cards when no collection is set. |
 | `build-a-box-banner` | Homepage promo for the builder. |
 | `main-product` | Gallery, variant pack selector, selling plans, metafield-backed accordions. |
-| `build-a-box` | The 12-can picker. See below. |
+| `build-a-box` | Legacy flat-rate 12-can picker. No longer used by any template (replaced by `bh-builder`). |
+| `bh-builder` | Build-your-own beer box — port of BroBasket's BYOB builder. See below. |
 | `review-block` | Ships in placeholder mode — see compliance. |
 | `footer` | Text / menu / newsletter blocks. |
 
@@ -114,3 +115,38 @@ states anywhere in the UI until the attorney-confirmed list exists.
 The `review-block` ships with its placeholder badge on. Leave it on until real
 reviews are wired in from a review app — do not publish invented reviews as
 real customer quotes.
+
+
+## Build-your-own beer box (`bh-builder`)
+
+Port of BroBasket's Build Your Own Basket builder (`jgrasty123/Shopify_Brobasket`:
+`sections/bb-builder.liquid`, `sections/bb-builder-grid.liquid`,
+`snippets/bb-builder-config.liquid`, `assets/bb-builder.js`). Lives on
+`templates/page.build-a-box.json`.
+
+| File | Role |
+| --- | --- |
+| `sections/bh-builder.liquid` | Chrome: steps, toolbar, size picker, gift note, review, box bar |
+| `sections/bh-builder-grid.liquid` | Section Rendering API endpoint — one page of cans |
+| `snippets/bh-builder-config.liquid` | Steps + filter groups, emitted as JSON |
+| `snippets/bh-builder-card.liquid` | One pickable can (only products tagged `bh:byo`) |
+| `assets/bh-builder.js` / `.css` | Client |
+
+How it works (same as BroBasket):
+
+- Each can is its own cart line at its single price. No bundle product, no
+  flat rate. Inventory decrements per can.
+- Lines carry `Bundle`, `Box ID` and `Box Size` properties; the gift note
+  (`Gift Note To` / `Gift Note` / `Gift Note From`) rides on the first line.
+- The URL is the query: filters are collection handles, search is `/search`,
+  paging is `&page=`.
+
+Brew Hunters differences: a box-size step (6 or 12 by default, set in the
+section), exactly that many cans per box, multiple boxes per order, no
+greeting-card product, no adult-signature fee line.
+
+Collections it reads (smart collections, all require tag `bh:byo`):
+`byo-singles` (source), brewery `byo-mother-earth|fig-mountain|topa-topa|rincon|ghostfish|bored-brewing`,
+style `byo-ipa|hazy|lager|pale-ale|stout|sour|belgian|non-alcoholic`,
+size `byo-12oz|byo-16oz`. A handle that doesn't exist or is empty is simply
+not shown as a filter.

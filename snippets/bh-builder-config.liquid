@@ -1,0 +1,174 @@
+{%- comment -%}
+----------------------------------------------------------------------------------------------------------------------
+BH BUILDER CONFIG  v1.0  (2026-09-16)
+----------------------------------------------------------------------------------------------------------------------
+
+Port of BroBasket's snippets/bb-builder-config.liquid (jgrasty123/Shopify_Brobasket,
+v0.3, 2026-08-24). Same model, same output contract, beer-sampler steps.
+
+  {%- render 'bh-builder-config', bundle_name: ..., sizes: ..., source: ... -%}
+
+WHY IT EMITS JSON
+  `{% render %}` runs in an isolated scope, so nothing assigned here is visible
+  to the calling section. The snippet owns the whole payload and the client
+  renders the step nav and the filter drawer from this one object. (BroBasket
+  v0.2 learned this the hard way: "steps": [] in production.)
+
+THE MODEL
+  A step is a NAME plus a LIST OF COLLECTIONS.
+    membership     = union of the step's source collections
+    filter options = one per collection in the step's filter groups
+    admin          = Shopify's own collection editor
+  Handles with no matching collection are skipped, never rendered as dead
+  filter options — so a filter group can be listed here before its smart
+  collection exists.
+
+WHAT IS DIFFERENT FROM BROBASKET
+  * A `size` step comes first. The customer picks a box size (6 or 12 cans by
+    default); the beer step then requires EXACTLY that many cans. `min` on the
+    beer step is the literal string "size", which the client resolves.
+  * No greeting-card product and no basket container step.
+  * No adult signature fee line. Brew Hunters has no fee SKU; the signature
+    requirement is shown as copy from settings.signature_notice.
+
+ADDING OR REORDERING A STEP
+  Edit the index-aligned lists below. No other file changes.
+----------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- liquid
+  assign source_handle = source | default: 'byo-singles'
+
+  assign bh_step_keys  = 'size,beers,message,summary' | split: ','
+  assign bh_step_names = 'Pick Your Box Size|Pick Your Beers|Add a Gift Note|Review Your Box' | split: '|'
+  assign bh_step_mins  = '0,size,0,0' | split: ','
+  assign bh_step_types = 'size,products,message,summary' | split: ','
+
+  assign bh_step_sources = ';' | append: source_handle | append: ';;'
+  assign bh_step_sources = bh_step_sources | split: ';'
+
+  comment
+    Filter groups for the beer step. Format: Label:handle,handle|Label:handle
+    Each handle is a smart collection scoped to tag `bh:byo`. Missing ones are
+    skipped at render time.
+  endcomment
+  assign bh_step_groups = ';Brewery:byo-mother-earth,byo-fig-mountain,byo-topa-topa,byo-rincon,byo-ghostfish,byo-bored-brewing|Style:byo-ipa,byo-hazy,byo-lager,byo-pale-ale,byo-stout,byo-sour,byo-belgian,byo-non-alcoholic|Can size:byo-12oz,byo-16oz;;' | split: ';'
+
+  assign steps_json = ''
+  assign step_first = true
+
+  for key in bh_step_keys
+    assign i = forloop.index0
+
+    assign src_handles = bh_step_sources[i] | split: ','
+    assign sources_json = ''
+    assign src_first = true
+    for handle in src_handles
+      assign col = collections[handle]
+      if col == blank or col.handle == blank
+        continue
+      endif
+      assign h_json = col.handle | json
+      assign t_json = col.title | json
+      assign entry = '{"handle":' | append: h_json | append: ',"title":' | append: t_json | append: '}'
+      if src_first
+        assign sources_json = entry
+        assign src_first = false
+      else
+        assign sources_json = sources_json | append: ',' | append: entry
+      endif
+    endfor
+
+    assign groups_raw = bh_step_groups[i] | split: '|'
+    assign groups_json = ''
+    assign grp_first = true
+    for group in groups_raw
+      assign parts = group | split: ':'
+      if parts.size < 2
+        continue
+      endif
+      assign glabel = parts[0]
+      assign ghandles = parts[1] | split: ','
+      assign opts_json = ''
+      assign opt_first = true
+      for handle in ghandles
+        assign col = collections[handle]
+        if col == blank or col.handle == blank
+          continue
+        endif
+        if col.products_count == 0
+          continue
+        endif
+        assign h_json = col.handle | json
+        assign t_json = col.title | json
+        assign opt = '{"handle":' | append: h_json | append: ',"title":' | append: t_json | append: ',"count":' | append: col.products_count | append: '}'
+        if opt_first
+          assign opts_json = opt
+          assign opt_first = false
+        else
+          assign opts_json = opts_json | append: ',' | append: opt
+        endif
+      endfor
+      if opt_first
+        continue
+      endif
+      assign gl_json = glabel | json
+      assign grp = '{"label":' | append: gl_json | append: ',"options":[' | append: opts_json | append: ']}'
+      if grp_first
+        assign groups_json = grp
+        assign grp_first = false
+      else
+        assign groups_json = groups_json | append: ',' | append: grp
+      endif
+    endfor
+
+    assign key_json = key | json
+    assign name_json = bh_step_names[i] | json
+    assign type_json = bh_step_types[i] | json
+    assign min_json = bh_step_mins[i]
+    if min_json == 'size'
+      assign min_json = '"size"'
+    endif
+
+    assign step = '{"key":' | append: key_json
+    assign step = step | append: ',"name":' | append: name_json
+    assign step = step | append: ',"min":' | append: min_json
+    assign step = step | append: ',"type":' | append: type_json
+    assign step = step | append: ',"sources":[' | append: sources_json
+    assign step = step | append: '],"filterGroups":[' | append: groups_json
+    assign step = step | append: ']}'
+
+    if step_first
+      assign steps_json = step
+      assign step_first = false
+    else
+      assign steps_json = steps_json | append: ',' | append: step
+    endif
+  endfor
+
+  assign size_list = sizes | default: '6,12' | split: ','
+  assign sizes_json = ''
+  for s in size_list
+    assign n = s | strip | plus: 0
+    if n < 1
+      continue
+    endif
+    if sizes_json == ''
+      assign sizes_json = n | append: ''
+    else
+      assign sizes_json = sizes_json | append: ',' | append: n
+    endif
+  endfor
+
+  assign bundle_name_json = bundle_name | default: 'Build Your Own Beer Box' | json
+  assign notice_json = settings.signature_notice | default: '' | json
+-%}
+
+<script type="application/json" data-bh-builder-config>
+{
+  "steps": [{{ steps_json }}],
+  "sizes": [{{ sizes_json }}],
+  "bundleName": {{ bundle_name_json }},
+  "signatureNotice": {{ notice_json }}
+}
+</script>
