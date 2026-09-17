@@ -107,7 +107,7 @@
                 <input type="radio" name="selling_plan" value="" checked>
                 <span>
                   <b>{{ 'products.product.one_time' | t }}</b>
-                  <em>{{ v.price | money }}</em>
+                  <em data-plan-price="">{{ v.price | money }}</em>
                 </span>
               </label>
 
@@ -119,12 +119,12 @@
                     <input type="radio" name="selling_plan" value="{{ plan.id }}">
                     <span>
                       <b>{{ plan.name }}</b>
-                      {%- if allocation -%}
-                        <em>{{ allocation.price | money }}</em>
-                        {%- if allocation.price < v.price -%}
+                      <em data-plan-price="{{ plan.id }}">{%- if allocation -%}{{ allocation.price | money }}{%- endif -%}</em>
+                      <span data-plan-save="{{ plan.id }}">
+                        {%- if allocation and allocation.price < v.price -%}
                           · save {{ v.price | minus: allocation.price | money }}
-                        {%- endif -%} ·
-                      {%- endif -%}
+                        {%- endif -%}
+                      </span> ·
                       {{ plan.description | default: 'skip or cancel anytime' }}
                     </span>
                   </label>

@@ -298,6 +298,30 @@
       });
     }
 
+    function syncPlanPrices(variant) {
+      var rows = pdp.querySelectorAll('[data-plan-price]');
+      if (!rows.length) return;
+      var allocations = variant.selling_plan_allocations || [];
+
+      rows.forEach(function (el) {
+        var planId = el.getAttribute('data-plan-price');
+        if (!planId) { el.textContent = money(variant.price); return; }
+
+        var alloc = allocations.find(function (a) {
+          return String(a.selling_plan_id) === String(planId);
+        });
+        // A plan the current variant isn't sold on: blank the row rather than
+        // leave the previous variant's price sitting there.
+        el.textContent = alloc ? money(alloc.price) : '';
+
+        var saveEl = pdp.querySelector('[data-plan-save="' + planId + '"]');
+        if (saveEl) {
+          var saves = alloc && alloc.price < variant.price;
+          saveEl.textContent = saves ? ' · save ' + money(variant.price - alloc.price) : '';
+        }
+      });
+    }
+
     function syncVariant() {
       var selection = currentSelection();
       var variant = matchVariant(selection);
@@ -319,6 +343,11 @@
           compareEl.hidden = true;
         }
       }
+
+      // Subscription rows are rendered server-side from the FIRST variant, so
+      // they have to be repriced whenever the variant changes - otherwise a
+      // 24-beer box still shows the 4-beer subscription price.
+      syncPlanPrices(variant);
 
       if (addBtn) {
         addBtn.disabled = !variant.available;
