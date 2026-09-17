@@ -546,7 +546,7 @@
 
     syncNav();
     renderSteps();
-    if (st.type === 'summary') renderSummary();
+    if (currentStep().type === 'summary') renderSummary();
   }
 
   function syncCards() {
