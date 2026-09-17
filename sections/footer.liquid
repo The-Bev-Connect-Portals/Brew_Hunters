@@ -17,6 +17,25 @@
                 {%- endfor -%}
               </ul>
 
+            {%- when 'family' -%}
+              <h4>{{ block.settings.heading }}</h4>
+              {%- if block.settings.text != blank -%}
+                <p style="font-size:.95rem;opacity:.85;max-width:34ch">{{ block.settings.text }}</p>
+              {%- endif -%}
+              <ul>
+                {%- for i in (1..4) -%}
+                  {%- liquid
+                    assign label_key = 'label_' | append: i
+                    assign url_key = 'url_' | append: i
+                    assign label = block.settings[label_key]
+                    assign url = block.settings[url_key]
+                  -%}
+                  {%- if label != blank and url != blank -%}
+                    <li><a href="{{ url }}">{{ label }}</a></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+
             {%- when 'newsletter' -%}
               <h4>{{ block.settings.heading }}</h4>
               {%- if block.settings.text != blank -%}
@@ -53,7 +72,7 @@
 {
   "name": "Footer",
   "tag": "div",
-  "max_blocks": 6,
+  "max_blocks": 8,
   "settings": [
     {
       "type": "select",
@@ -84,6 +103,22 @@
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
         { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "family",
+      "name": "Family of sites",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Our other shops" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Same team, same Ventura warehouse." },
+        { "type": "text", "id": "label_1", "label": "Link 1 label", "default": "The BroBasket \u2014 liquor gift baskets" },
+        { "type": "url", "id": "url_1", "label": "Link 1 URL", "default": "https://thebrobasket.com" },
+        { "type": "text", "id": "label_2", "label": "Link 2 label", "default": "BoozeFinders \u2014 spirits & wine" },
+        { "type": "url", "id": "url_2", "label": "Link 2 URL", "default": "https://boozefinders.com" },
+        { "type": "text", "id": "label_3", "label": "Link 3 label", "default": "Night Shift Gifts \u2014 new-parent gifts" },
+        { "type": "url", "id": "url_3", "label": "Link 3 URL", "default": "https://nightshiftgifts.com" },
+        { "type": "text", "id": "label_4", "label": "Link 4 label" },
+        { "type": "url", "id": "url_4", "label": "Link 4 URL" }
       ]
     },
     {
