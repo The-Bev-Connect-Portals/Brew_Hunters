@@ -13,7 +13,23 @@
     {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
   </title>
 
-  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+  {%- liquid
+    # Shopify only fills page_description when the resource has an SEO
+    # description set. Most of ours don't, so fall back to the resource's own
+    # body copy rather than shipping a page with no description at all.
+    assign meta_description = page_description
+    if meta_description == blank
+      case request.page_type
+        when 'product'
+          assign meta_description = product.description | strip_html | truncate: 155
+        when 'collection'
+          assign meta_description = collection.description | strip_html | truncate: 155
+        when 'page'
+          assign meta_description = page.content | strip_html | truncate: 155
+      endcase
+    endif
+  -%}
+  {% if meta_description != blank %}<meta name="description" content="{{ meta_description | escape }}">{% endif %}
 
   {% if settings.favicon %}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -26,6 +42,7 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
   {% render 'meta-tags' %}
+  {% render 'structured-data' %}
   {{ content_for_header }}
 </head>
 
