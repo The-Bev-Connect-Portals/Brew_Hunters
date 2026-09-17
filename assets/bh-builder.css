@@ -153,6 +153,17 @@
 .bhb-sumtotals__row{display:flex;justify-content:space-between;font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:1.4rem}
 .bhb-summary__empty{font-family:var(--mono)}
 
+/* ---------- step nav ---------- */
+.bhb-nav{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin:1.6rem 0 1rem;padding-top:1.2rem;border-top:2px solid var(--spruce)}
+.bhb-nav__hint{margin:0;flex:1;min-width:8rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+.bhb-nav__next{margin-left:auto}
+.bhb-nav .cta[disabled]{opacity:.45;cursor:not-allowed}
+@media (max-width:560px){
+  .bhb-nav{gap:.6rem}
+  .bhb-nav__hint{order:3;flex-basis:100%;text-align:center}
+  .bhb-nav .cta{flex:1;justify-content:center}
+}
+
 /* ---------- box bar ---------- */
 .bhb-boxbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--spruce);color:var(--fog);border-top:2px solid var(--spruce)}
 .bhb-boxbar__inner{display:flex;align-items:center;gap:1rem;padding-block:.75rem;flex-wrap:wrap}

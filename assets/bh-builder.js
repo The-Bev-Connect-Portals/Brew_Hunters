@@ -63,6 +63,9 @@
     loadMore: root.querySelector('[data-bb-load-more]'),
     next: root.querySelector('[data-bb-next]'),
     back: root.querySelector('[data-bb-back]'),
+    nextInline: root.querySelector('[data-bb-next-inline]'),
+    backInline: root.querySelector('[data-bb-back-inline]'),
+    navHint: root.querySelector('[data-bb-nav-hint]'),
     addBox: root.querySelector('[data-bb-add-box]'),
     filtersOpen: root.querySelector('[data-bb-filters-open]'),
     filterCount: root.querySelector('[data-bb-filter-count]'),
@@ -114,6 +117,8 @@
     box: [],              // [{variantId, productId, title, vendor, price, image, step, boxId, qty}]
     boxId: 1,
     sizes: {},            // boxId -> can count
+    advanced: {},         // 'boxId:stepIndex' -> already auto-advanced once
+    advanceTimer: null,
     submitting: false
   };
 
@@ -320,6 +325,7 @@
     renderBox();
     syncCards();
     if (total > n) setStatus('Box resized to ' + n + '. Removed ' + (total - n) + ' can' + (total - n === 1 ? '' : 's') + '.');
+    if (currentStep().type === 'size') autoAdvance('Box size ' + n + '. Now pick your beers.');
   }
 
   // ── Filters ───────────────────────────────────────────────────────────────
@@ -426,7 +432,10 @@
     }
     renderBox();
     syncCards();
-    if (boxIsFull()) setStatus('Box full. Continue when you are ready.');
+    if (boxIsFull()) {
+      setStatus('Box full.');
+      autoAdvance('Box full — add a gift note, or skip it.');
+    }
   }
 
   function setQty(variantId, qty, boxId) {
@@ -448,6 +457,63 @@
     }
     renderBox();
     syncCards();
+  }
+
+  /**
+   * Keep both sets of Back/Next controls (sticky box bar + inline row under the
+   * step) in the same state, and write the "what's left" hint.
+   */
+  function syncNav() {
+    var st = currentStep();
+    var isLast = state.stepIndex === CONFIG.steps.length - 1;
+    var ready = stepSatisfied(state.stepIndex);
+    var disabled = state.submitting || !ready;
+    var label = state.submitting ? 'Adding…' : (isLast ? 'Add to cart' : 'Next');
+    var atStart = state.stepIndex === 0;
+
+    els.next.disabled = disabled;
+    els.next.textContent = label;
+    els.back.hidden = atStart;
+    els.addBox.hidden = !(isLast && allBoxesComplete());
+
+    if (els.nextInline) {
+      els.nextInline.disabled = disabled;
+      els.nextInline.innerHTML = escapeHtml(label) + (isLast ? '' : ' &rarr;');
+    }
+    if (els.backInline) els.backInline.hidden = atStart;
+
+    var min = stepMin(st);
+    var left = st.type === 'products' && min ? min - boxCountForStep(state.stepIndex) : 0;
+    var hint = '';
+    if (st.type === 'size' && !boxSize()) hint = 'Pick a box size to continue';
+    else if (left > 0) hint = 'Pick ' + left + ' more can' + (left === 1 ? '' : 's') + ' to continue';
+    else if (st.type === 'message') hint = 'Optional — skip it with Next';
+    else if (ready && !isLast) hint = 'Ready for the next step';
+
+    if (els.navHint) els.navHint.textContent = hint;
+    if (left > 0) els.next.title = 'Pick ' + left + ' more to continue';
+    else els.next.removeAttribute('title');
+  }
+
+  /**
+   * Move the customer forward on their own once a step answers itself — a size
+   * chosen, or the last can dropped in. Only ever once per box per step, so
+   * coming Back to swap a can or change the size doesn't shove them forward
+   * again mid-edit.
+   */
+  function autoAdvance(reason) {
+    if (state.stepIndex >= CONFIG.steps.length - 1) return;
+    var key = state.boxId + ':' + state.stepIndex;
+    if (state.advanced[key]) return;
+    if (!stepSatisfied(state.stepIndex)) return;
+    state.advanced[key] = true;
+    var from = state.stepIndex;
+    clearTimeout(state.advanceTimer);
+    state.advanceTimer = setTimeout(function () {
+      if (state.stepIndex !== from || !stepSatisfied(from)) return;
+      goToStep(from + 1);
+      if (reason) setStatus(reason);
+    }, 450);
   }
 
   function renderBox() {
@@ -478,20 +544,7 @@
     els.boxCount.textContent = size ? (count + ' of ' + size + ' cans') : (count + (count === 1 ? ' can' : ' cans'));
     els.boxTotal.textContent = state.box.length ? money(total) : '';
 
-    var st = currentStep();
-    var isLast = state.stepIndex === CONFIG.steps.length - 1;
-    els.next.disabled = state.submitting || !stepSatisfied(state.stepIndex);
-    els.next.textContent = state.submitting ? 'Adding…' : (isLast ? 'Add to cart' : 'Continue');
-    els.back.hidden = state.stepIndex === 0;
-    els.addBox.hidden = !(isLast && allBoxesComplete());
-
-    var min = stepMin(st);
-    if (st.type === 'products' && min && boxCountForStep(state.stepIndex) < min) {
-      var left = min - boxCountForStep(state.stepIndex);
-      els.next.title = 'Pick ' + left + ' more to continue';
-    } else {
-      els.next.removeAttribute('title');
-    }
+    syncNav();
     renderSteps();
     if (st.type === 'summary') renderSummary();
   }
@@ -606,6 +659,7 @@
         state.submitting = false;
         state.box = [];
         state.sizes = {};
+        state.advanced = {};
         state.boxId = 1;
         if (els.msgTo) els.msgTo.value = '';
         if (els.msgBody) els.msgBody.value = '';
@@ -739,8 +793,22 @@
     return 0;
   }
 
+  /** Put the step rail back in view; a step change lower down is easy to miss. */
+  function scrollToSteps() {
+    if (!els.steps || typeof els.steps.getBoundingClientRect !== 'function') return;
+    var top = els.steps.getBoundingClientRect().top;
+    if (top >= 0 && top < 160) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try {
+      els.steps.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    } catch (e) {
+      els.steps.scrollIntoView();
+    }
+  }
+
   function goToStep(index) {
     if (index < 0 || index >= CONFIG.steps.length) return;
+    var moved = index !== state.stepIndex;
     state.stepIndex = index;
     state.filters = [];
     state.query = '';
@@ -760,6 +828,7 @@
     renderSteps();
     renderFilters();
     renderBox();
+    if (moved) scrollToSteps();
 
     if (type === 'size') {
       renderSizes();
@@ -868,14 +937,21 @@
     else if (!els.drawer.hidden) openDrawer(false);
   });
 
-  els.next.addEventListener('click', function () {
+  function goNext() {
+    clearTimeout(state.advanceTimer);
     if (!stepSatisfied(state.stepIndex)) return;
+    state.advanced[state.boxId + ':' + state.stepIndex] = true;
     if (state.stepIndex < CONFIG.steps.length - 1) goToStep(state.stepIndex + 1);
     else submitToCart();
-  });
-  els.back.addEventListener('click', function () {
+  }
+  function goBack() {
+    clearTimeout(state.advanceTimer);
     if (state.stepIndex > 0) goToStep(state.stepIndex - 1);
-  });
+  }
+  els.next.addEventListener('click', goNext);
+  els.back.addEventListener('click', goBack);
+  if (els.nextInline) els.nextInline.addEventListener('click', goNext);
+  if (els.backInline) els.backInline.addEventListener('click', goBack);
   els.addBox.addEventListener('click', startAnotherBox);
 
   els.msgBody.addEventListener('input', function () {
