@@ -120,15 +120,30 @@
                     <span>
                       <b>{{ plan.name }}</b>
                       {%- if allocation -%}
-                        <em>{{ allocation.price | money }}</em> ·
+                        <em>{{ allocation.price | money }}</em>
+                        {%- if allocation.price < v.price -%}
+                          · save {{ v.price | minus: allocation.price | money }}
+                        {%- endif -%} ·
                       {%- endif -%}
-                      skip or cancel anytime
+                      {{ plan.description | default: 'skip or cancel anytime' }}
                     </span>
                   </label>
                 {%- endfor -%}
               {%- endfor -%}
             </div>
           {%- endif -%}
+
+          {%- comment -%}
+            App blocks (Shopify Subscriptions and the like) render inside the
+            product form so their selling_plan input posts with the add-to-cart.
+            The theme's own selling-plan radios above already cover plans, so
+            only add an app block here if you want the app's own widget instead.
+          {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == '@app' -%}
+              <div class="pdp__appblock" {{ block.shopify_attributes }}>{% render block %}</div>
+            {%- endif -%}
+          {%- endfor -%}
 
           <button class="cta cta--block"
                   type="submit"
@@ -149,6 +164,7 @@
       <!-- ---------- accordions ---------- -->
       <div class="facts">
         {%- for block in section.blocks -%}
+          {%- unless block.type == 'accordion' -%}{%- continue -%}{%- endunless -%}
           {%- liquid
             assign body = block.settings.text
             if block.settings.metafield_key != blank
@@ -189,6 +205,7 @@
     { "type": "text", "id": "ship_note", "label": "Note under the button", "default": "Ships Mon–Wed · 21+ signature required" }
   ],
   "blocks": [
+    { "type": "@app" },
     {
       "type": "accordion",
       "name": "Accordion",

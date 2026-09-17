@@ -478,3 +478,6 @@ p{margin:0}
 /* add-to-cart button states */
 .add[data-state="loading"],.cta[data-state="loading"]{opacity:.7;pointer-events:none}
 .add[data-state="done"]{background:var(--surf);color:var(--paper)}
+
+.pdp__appblock{margin-block:.9rem}
+.pdp__appblock:empty{display:none}
