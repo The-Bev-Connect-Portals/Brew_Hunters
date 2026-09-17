@@ -16,6 +16,32 @@
     "shipping_notice": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage.",
     "signature_notice": "Ships cold · 21+ signature required",
     "show_cart_note": false,
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "1768834845299682660": {
+        "type": "shopify://apps/subscriptions/blocks/app-embed-block/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
+        "disabled": false,
+        "settings": {
+          "color_text_title": "#6D7175",
+          "color_text_body": "#6D7175",
+          "dividers_color": "#8F8D8D",
+          "bacgkround_color": "#FFFFFF",
+          "border_thickness": 1,
+          "border_radius": 0,
+          "subscription_policy_url": ""
+        }
+      },
+      "6159598353363395418": {
+        "type": "shopify://apps/google-youtube/blocks/store_widget/14ec7bd0-ac77-49a9-9417-90752398bdff",
+        "disabled": false,
+        "settings": {
+          "widget_position": "LEFT_BOTTOM",
+          "side_margin": 36,
+          "bottom_margin": 36,
+          "mobile_side_margin": 16,
+          "mobile_bottom_margin": 46
+        }
+      }
+    }
   }
 }
