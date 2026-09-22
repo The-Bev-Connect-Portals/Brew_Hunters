@@ -4,6 +4,6 @@
 <meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
 {%- if meta_description != blank %}<meta property="og:description" content="{{ meta_description | escape }}">{% endif -%}
 {%- if request.page_type == 'product' and product.featured_media -%}
-  <meta property="og:image" content="http:{{ product.featured_media | image_url: width: 1200 }}">
+  <meta property="og:image" content="https:{{ product.featured_media | image_url: width: 1200 }}">
 {%- endif -%}
 <meta name="twitter:card" content="summary_large_image">

@@ -1,150 +1,55 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
       "type": "split-hero",
       "settings": {
         "color_scheme": "gold",
-        "eyebrow": "Curated Craft · Est. Ventura, CA",
+        "eyebrow": "Curated Craft · Ventura, CA",
         "line_1": "Hunt down",
         "line_2": "the good",
         "line_3": "stuff",
-        "subheading": "Hunt New Beer, Find New Breweries. Delivered to your door.",
+        "subheading": "Hunt new beer, find new breweries. Delivered to your door.",
         "image": "shopify://shop_images/6PakTech-NewCaliCreamin_800x800_94332393-8f08-4ba1-94ea-457e824e507e.png",
         "fallback_asset": "",
-        "fallback_alt": "Topa Topa Chief Peak IPA six-pack",
+        "fallback_alt": "Mother Earth Cali Creamin' six-pack",
         "cta_label": "Start the hunt",
         "cta_url": "/collections/all-beer",
         "cta2_label": "Build a mixed box",
         "cta2_url": "/pages/build-a-box",
-        "ship_note": "Shipped Direct To your Door",
+        "ship_note": "Shipped to your door · 21+ signature",
         "sticker_text": "Packed In · Ventura, CA ·"
       }
     },
     "wave_1": {
       "type": "wave-divider",
-      "settings": {
-        "shape": "a",
-        "color_back": "clay",
-        "color_mid": "ember",
-        "color_front": "fog"
-      }
+      "settings": { "shape": "a", "color_back": "clay", "color_mid": "ember", "color_front": "fog" }
     },
     "props": {
       "type": "value-props",
       "blocks": {
-        "p1": {
-          "type": "prop",
-          "settings": {
-            "icon": "cold",
-            "title": "Cold chain, start to stoop",
-            "text": "Fresh from the brewery, every order is packed the morning it ships."
-          }
-        },
-        "p2": {
-          "type": "prop",
-          "settings": {
-            "icon": "brewery",
-            "title": "Straight from the brewery",
-            "text": "We work directly with breweries — curating your favorite beers and some hard-to-find brews."
-          }
-        },
-        "p3": {
-          "type": "prop",
-          "settings": {
-            "icon": "shield",
-            "title": "Freshness Verified",
-            "text": "Every beer is certified as fresh as possible, nothing stale, nothing old"
-          }
-        },
-        "p4": {
-          "type": "prop",
-          "settings": {
-            "icon": "box",
-            "title": "Mix your own 12",
-            "text": "Pull cans from all four breweries into one box at a single flat rate."
-          }
-        }
+        "p1": { "type": "prop", "settings": { "icon": "box", "title": "Packed in Ventura, CA", "text": "Every order is packed by our team in Ventura and ships Monday through Wednesday." } },
+        "p2": { "type": "prop", "settings": { "icon": "brewery", "title": "Great craft breweries", "text": "Flagships, seasonals and hard-to-find releases from Central Coast and partner breweries." } },
+        "p3": { "type": "prop", "settings": { "icon": "shield", "title": "21+ signature at delivery", "text": "An adult 21 or older with valid ID must sign for every order." } },
+        "p4": { "type": "prop", "settings": { "icon": "box", "title": "Build your own box", "text": "Mix singles from across the roster into a 6 or 12 can box. Each can is priced individually." } }
       },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4"
-      ],
-      "settings": {
-        "color_scheme": "fog",
-        "flush_top": true
-      }
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": { "color_scheme": "fog", "flush_top": true }
     },
     "breweries": {
       "type": "brewery-tiles",
       "blocks": {
-        "b1": {
-          "type": "tile",
-          "settings": {
-            "collection": "topa-topa-brewing-co",
-            "title": "Topa Topa Brewing Co.",
-            "location": "Ventura & Ojai, CA",
-            "count_label": "",
-            "url": "",
-            "tile_color": "gold"
-          }
-        },
-        "b2": {
-          "type": "tile",
-          "settings": {
-            "collection": "mother-earth-brew-co",
-            "title": "Mother Earth Brew Co.",
-            "location": "Vista, CA",
-            "count_label": "",
-            "url": "",
-            "tile_color": "surf"
-          }
-        },
-        "b3": {
-          "type": "tile",
-          "settings": {
-            "collection": "figueroa-mountain-brew-co",
-            "title": "Figueroa Mountain",
-            "location": "Buellton, CA",
-            "count_label": "",
-            "url": "",
-            "tile_color": "ember"
-          }
-        },
-        "b4": {
-          "type": "tile",
-          "settings": {
-            "collection": "rincon-brewery",
-            "title": "Rincon Brewery",
-            "location": "Carpinteria, CA",
-            "count_label": "",
-            "url": "",
-            "tile_color": "paper"
-          }
-        }
+        "b1": { "type": "tile", "settings": { "collection": "topa-topa-brewing-co", "title": "Topa Topa Brewing Co.", "location": "Ventura & Ojai, CA", "count_label": "", "url": "", "tile_color": "gold" } },
+        "b2": { "type": "tile", "settings": { "collection": "mother-earth-brew-co", "title": "Mother Earth Brew Co.", "location": "Vista, CA", "count_label": "", "url": "", "tile_color": "surf" } },
+        "b3": { "type": "tile", "settings": { "collection": "figueroa-mountain-brew-co", "title": "Figueroa Mountain", "location": "Buellton, CA", "count_label": "", "url": "", "tile_color": "ember" } },
+        "b4": { "type": "tile", "settings": { "collection": "rincon-brewery", "title": "Rincon Brewery", "location": "Carpinteria, CA", "count_label": "", "url": "", "tile_color": "paper" } }
       },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3",
-        "b4"
-      ],
+      "block_order": ["b1", "b2", "b3", "b4"],
       "settings": {
         "color_scheme": "fog",
         "anchor": "breweries",
         "eyebrow": "The roster",
         "heading": "Breweries worth the drive",
-        "intro": "Every beer on this site comes directly from breweries we work with directly (and taste-test all of them).\n We stock the flagships, the seasonals, and the ones that never leave the tasting room."
+        "intro": "Craft beer from Central Coast favorites and partner breweries — the flagships, the seasonals, and limited releases."
       }
     },
     "haul": {
@@ -154,20 +59,15 @@
         "anchor": "haul",
         "collection": "all-beer",
         "limit": 8,
-        "eyebrow": "In stock this week",
+        "eyebrow": "Featured beers",
         "heading": "This week's haul",
-        "intro": "Prices are per pack, shipped. Cans are dated at the brewery — nothing on this page is more than six weeks old.",
+        "intro": "Prices are per pack. Shipping is calculated at checkout — free on orders over $100.",
         "view_all": true
       }
     },
     "wave_2": {
       "type": "wave-divider",
-      "settings": {
-        "shape": "b",
-        "color_back": "gold",
-        "color_mid": "clay",
-        "color_front": "ember"
-      }
+      "settings": { "shape": "b", "color_back": "gold", "color_mid": "clay", "color_front": "ember" }
     },
     "mix": {
       "type": "build-a-box-banner",
@@ -175,35 +75,15 @@
         "color_scheme": "ember",
         "anchor": "mix",
         "eyebrow": "Build a box",
-        "heading": "Twelve cans. Four breweries. One flat rate.",
-        "text": "Pull any twelve singles across the whole roster and we'll pack them into one cold box. Same shipping as a single six-pack.",
+        "heading": "Your box. Your beers.",
+        "text": "Pick 6 or 12 singles from across the roster and we'll pack them together in one box. Each can is priced individually.",
         "fallback_asset": "mixed-box.webp",
-        "fallback_alt": "Mixed twelve pack of Central Coast craft beer",
+        "fallback_alt": "Mixed box of Central Coast craft beer cans",
         "cta_label": "Start building",
         "cta_url": "/pages/build-a-box",
         "sticker_text": "Mix it · Match it · Ship it ·"
       }
-    },
-    "review": {
-      "type": "review-block",
-      "settings": {
-        "color_scheme": "surf",
-        "placeholder": true,
-        "placeholder_label": "Placeholder review — sample copy",
-        "eyebrow": "",
-        "quote": "\"Got Topa Topa in Sacramento two days after ordering. Still cold.\"",
-        "meta": "Sample layout only\nLive reviews pull from\nthe review app of choice"
-      }
     }
   },
-  "order": [
-    "hero",
-    "wave_1",
-    "props",
-    "breweries",
-    "haul",
-    "wave_2",
-    "mix",
-    "review"
-  ]
+  "order": ["hero", "wave_1", "props", "breweries", "haul", "wave_2", "mix"]
 }

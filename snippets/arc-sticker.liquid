@@ -3,7 +3,7 @@
   Accepts: text, ring (hex/var), ink (hex/var), modifier, uid
 {%- endcomment -%}
 {%- liquid
-  assign sticker_text = text | default: 'Packed cold · Ventura, CA ·'
+  assign sticker_text = text | default: 'Packed In · Ventura, CA ·'
   assign ring_color = ring | default: 'var(--ember)'
   assign ink_color = ink | default: 'var(--fog)'
   assign arc_id = 'arc-' | append: uid | default: 'arc-1'

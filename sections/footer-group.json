@@ -9,20 +9,13 @@
           "type": "text",
           "settings": {
             "heading": "Where we ship",
-            "text": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage."
+            "text": "Beer ships from Ventura, CA to U.S. states that permit direct-to-consumer beer shipment. Eligibility is confirmed at checkout."
           }
         },
         "shop": {
           "type": "menu",
           "settings": {
             "heading": "Shop",
-            "menu": "footer"
-          }
-        },
-        "help": {
-          "type": "menu",
-          "settings": {
-            "heading": "Help",
             "menu": "footer"
           }
         },
@@ -45,12 +38,24 @@
             "label_3": "Night Shift Gifts — new-parent gifts",
             "url_3": "https://nightshiftgifts.com"
           }
+        },
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "heading": "Contact us",
+            "business_name": "Brew Hunters",
+            "legal_line": "Owned and operated by Go-To Gifting, LLC",
+            "street": "2264 Goodyear Ave STE C",
+            "city_line": "Ventura, CA 93003",
+            "phone": "(844) 446-2443",
+            "email": "beerme@brewhunters.com"
+          }
         }
       },
       "block_order": [
         "ship",
+        "contact",
         "shop",
-        "help",
         "family",
         "news"
       ],
@@ -58,7 +63,7 @@
         "color_scheme": "spruce",
         "anchor": "ship",
         "wordmark": "Brew Hunters",
-        "city": "Ventura, CA"
+        "legal_line": "Owned and operated by Go-To Gifting, LLC · Ventura, CA"
       }
     }
   },

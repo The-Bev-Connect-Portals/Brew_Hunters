@@ -1,48 +1,28 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
       "type": "main-product",
       "blocks": {
-        "notes": {
-          "type": "accordion",
-          "settings": {
-            "heading": "Tasting notes",
-            "metafield_key": "tasting_notes",
-            "open": true
-          }
-        },
+        "notes": { "type": "accordion", "settings": { "heading": "Tasting notes", "metafield_key": "tasting_notes", "open": true } },
         "ships": {
           "type": "accordion",
           "settings": {
             "heading": "How it ships",
-            "text": "<p>Packed in an insulated liner with gel packs at our licensed Ventura, CA facility and handed to the carrier the same morning. Orders placed after Wednesday ship the following Monday so nothing sits in a truck over the weekend.</p>"
+            "text": "<p>Packed at our Ventura, CA location and shipped Monday through Wednesday so packages aren't held in carrier facilities over the weekend. Shipping is calculated at checkout and is free on orders over $100. See our <a href=\"/policies/shipping-policy\">Shipping Policy</a>.</p>"
           }
         },
         "age": {
           "type": "accordion",
           "settings": {
             "heading": "Age verification",
-            "text": "<p>Every order requires an adult 21 or over to sign at delivery. Carriers will not leave beer at the door, and IDs are checked against the name on the order.</p>"
+            "text": "<p>Every order requires an adult 21 or older with valid government-issued ID to sign at delivery. Carriers will not leave beer unattended.</p>"
           }
         }
       },
-      "block_order": [
-        "notes",
-        "ships",
-        "age"
-      ],
+      "block_order": ["notes", "ships", "age"],
       "settings": {
         "color_scheme": "fog",
-        "price_note": "shipped cold",
+        "price_note": "",
         "ship_note": "Ships Mon–Wed · 21+ signature required"
       }
     },
@@ -54,13 +34,10 @@
         "limit": 4,
         "eyebrow": "Goes well with",
         "heading": "Fill out the box",
-        "intro": "Add two more packs and the shipping cost per beer drops by roughly a third.",
+        "intro": "Orders over $100 ship free.",
         "collection": "all-beer"
       }
     }
   },
-  "order": [
-    "main",
-    "related"
-  ]
+  "order": ["main", "related"]
 }

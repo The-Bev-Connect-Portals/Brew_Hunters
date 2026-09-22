@@ -7,29 +7,37 @@
   <link rel="canonical" href="{{ canonical_url }}">
 
   <title>
-    {{ page_title }}
-    {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
-    {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
-    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    {%- if request.page_type == 'index' -%}
+      Brew Hunters | Craft Beer Delivered — Central Coast Breweries &amp; Beer Gifts
+    {%- else -%}
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    {%- endif -%}
   </title>
 
   {%- liquid
-    # Shopify only fills page_description when the resource has an SEO
-    # description set. Most of ours don't, so fall back to the resource's own
-    # body copy rather than shipping a page with no description at all.
+    # Use the resource's SEO description when set; otherwise fall back to its
+    # own copy; otherwise a store-level default so no page ships without one.
     assign meta_description = page_description
     if meta_description == blank
       case request.page_type
+        when 'index'
+          assign meta_description = 'Shop craft beer online from Brew Hunters in Ventura, CA. Topa Topa, Figueroa Mountain, Rincon, Mother Earth and more — 6-packs, singles, samplers and beer gifts. 21+.'
         when 'product'
-          assign meta_description = product.description | strip_html | truncate: 155
+          assign meta_description = product.description | strip_html | strip_newlines | truncate: 155
         when 'collection'
-          assign meta_description = collection.description | strip_html | truncate: 155
+          assign meta_description = collection.description | strip_html | strip_newlines | truncate: 155
         when 'page'
-          assign meta_description = page.content | strip_html | truncate: 155
+          assign meta_description = page.content | strip_html | strip_newlines | truncate: 155
       endcase
     endif
+    if meta_description == blank
+      assign meta_description = 'Brew Hunters sells craft beer online from Ventura, CA. Owned and operated by Go-To Gifting, LLC. Adult 21+ signature required at delivery.'
+    endif
   -%}
-  {% if meta_description != blank %}<meta name="description" content="{{ meta_description | escape }}">{% endif %}
+  <meta name="description" content="{{ meta_description | escape }}">
 
   {% if settings.favicon %}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
@@ -41,7 +49,7 @@
 
   {{ 'base.css' | asset_url | stylesheet_tag }}
 
-  {% render 'meta-tags' %}
+  {% render 'meta-tags', meta_description: meta_description %}
 
   {%- comment -%}
     JSON-LD is inlined here rather than living in a snippet. A snippet render
@@ -49,7 +57,7 @@
     sync did exactly that once: layout/theme.liquid arrived, the new snippet
     did not, and every page printed a Liquid error. theme.liquid already
     exists in the live theme, so editing it can't fail the same way.
-    Product / BreadcrumbList / CollectionPage / Organization / WebSite.
+    OnlineStore (every page) / Product / BreadcrumbList / CollectionPage / WebSite.
     No aggregateRating or review - there are none, and inventing them risks
     a manual action.
   {%- endcomment -%}
@@ -57,6 +65,35 @@
   assign shop_url = shop.url
   assign currency = cart.currency.iso_code | default: shop.currency
 -%}
+
+    {%- comment -%} Business identity: must match Merchant Center exactly. {%- endcomment -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "OnlineStore",
+      "name": "Brew Hunters",
+      "legalName": "Go-To Gifting, LLC",
+      "url": {{ shop.url | json }},
+      {%- if settings.logo %}"logo": {{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }},{% endif %}
+      "email": "beerme@brewhunters.com",
+      "telephone": "+1-844-446-2443",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2264 Goodyear Ave STE C",
+        "addressLocality": "Ventura",
+        "addressRegion": "CA",
+        "postalCode": "93003",
+        "addressCountry": "US"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+1-844-446-2443",
+        "email": "beerme@brewhunters.com",
+        "areaServed": "US"
+      }
+    }
+    </script>
 
 {%- case request.page_type -%}
 
@@ -78,13 +115,17 @@
       {%- if v.sku != blank -%}
         "sku": {{ v.sku | json }},
       {%- endif -%}
+      {%- if v.barcode != blank -%}
+        "gtin": {{ v.barcode | json }},
+      {%- endif -%}
       "offers": {
         "@type": "Offer",
         "url": {{ product.url | prepend: shop_url | json }},
         "priceCurrency": {{ currency | json }},
         "price": {{ v.price | divided_by: 100.0 | json }},
         "availability": {%- if v.available -%}"https://schema.org/InStock"{%- else -%}"https://schema.org/OutOfStock"{%- endif -%},
-        "seller": { "@type": "Organization", "name": {{ shop.name | json }} }
+        "itemCondition": "https://schema.org/NewCondition",
+        "seller": { "@type": "Organization", "name": "Brew Hunters" }
       }
     }
     </script>
@@ -142,26 +183,7 @@
     </script>
 
   {%- when 'index' -%}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": {{ shop.name | json }},
-      "url": {{ shop_url | json }},
-      {%- if settings.logo -%}
-        "logo": {{ settings.logo | image_url: width: 512 | prepend: "https:" | json }},
-      {%- endif -%}
-      {%- if settings.social_instagram != blank or settings.social_facebook != blank -%}
-        "sameAs": [
-          {%- if settings.social_instagram != blank -%}{{ settings.social_instagram | json }}{%- endif -%}
-          {%- if settings.social_instagram != blank and settings.social_facebook != blank -%},{%- endif -%}
-          {%- if settings.social_facebook != blank -%}{{ settings.social_facebook | json }}{%- endif -%}
-        ],
-      {%- endif -%}
-      "description": {{ shop.description | default: 'Craft beer singles, multi-packs and build-your-own beer boxes shipped from Ventura, California.' | json }}
-    }
-    </script>
-    <script type="application/ld+json">
+        <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",

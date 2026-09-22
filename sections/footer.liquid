@@ -9,6 +9,17 @@
               <h4>{{ block.settings.heading }}</h4>
               <p style="font-size:.95rem;opacity:.85;max-width:34ch">{{ block.settings.text }}</p>
 
+            {%- when 'contact' -%}
+              <h4>{{ block.settings.heading }}</h4>
+              <address style="font-style:normal;font-size:.95rem;opacity:.85;line-height:1.6">
+                <strong>{{ block.settings.business_name }}</strong><br>
+                {{ block.settings.legal_line }}<br>
+                {{ block.settings.street }}<br>
+                {{ block.settings.city_line }}<br>
+                <a href="tel:{{ block.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | prepend: '+1' }}">{{ block.settings.phone }}</a><br>
+                <a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a>
+              </address>
+
             {%- when 'menu' -%}
               <h4>{{ block.settings.heading }}</h4>
               <ul>
@@ -61,8 +72,16 @@
       <p class="foot__word" aria-hidden="true">{{ section.settings.wordmark }}</p>
     {%- endif -%}
 
+    <nav class="foot__policies" aria-label="Store policies" style="display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-size:.85rem;margin:1rem 0">
+      {%- for policy in shop.policies -%}
+        <a href="{{ policy.url }}">{{ policy.title }}</a>
+      {%- endfor -%}
+      <a href="/pages/about-us">About Us</a>
+      <a href="/pages/contact">Contact</a>
+    </nav>
+
     <div class="foot__legal">
-      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ section.settings.city }}</span>
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }} · {{ section.settings.legal_line }}</span>
       <span>{{ settings.age_notice }}</span>
     </div>
   </div>
@@ -86,7 +105,7 @@
     },
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "ship" },
     { "type": "text", "id": "wordmark", "label": "Outline wordmark", "default": "Brew Hunters" },
-    { "type": "text", "id": "city", "label": "City line", "default": "Ventura, CA" }
+    { "type": "text", "id": "legal_line", "label": "Legal line", "default": "Owned and operated by Go-To Gifting, LLC · Ventura, CA" }
   ],
   "blocks": [
     {
@@ -94,7 +113,21 @@
       "name": "Text",
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "Where we ship" },
-        { "type": "textarea", "id": "text", "label": "Text", "default": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage." }
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Beer ships from Ventura, CA to U.S. states that permit direct-to-consumer beer shipment. Eligibility is confirmed at checkout." }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Business contact",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Contact us" },
+        { "type": "text", "id": "business_name", "label": "Business name", "default": "Brew Hunters" },
+        { "type": "text", "id": "legal_line", "label": "Legal line", "default": "Owned and operated by Go-To Gifting, LLC" },
+        { "type": "text", "id": "street", "label": "Street", "default": "2264 Goodyear Ave STE C" },
+        { "type": "text", "id": "city_line", "label": "City / state / ZIP", "default": "Ventura, CA 93003" },
+        { "type": "text", "id": "phone", "label": "Phone", "default": "(844) 446-2443" },
+        { "type": "text", "id": "email", "label": "Email", "default": "beerme@brewhunters.com" }
       ]
     },
     {

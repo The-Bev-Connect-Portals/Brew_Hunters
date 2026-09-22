@@ -1,0 +1,29 @@
+<section class="band scheme scheme--{{ section.settings.color_scheme | default: 'fog' }}">
+  <div class="wrap">
+    <div class="band__head"><div><h2>{{ page.title }}</h2></div></div>
+    <div class="rte" style="max-width:68ch">{{ page.content }}</div>
+
+    {%- form 'contact', style: 'max-width:40rem;display:grid;gap:.8rem;margin-top:1.6rem' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="eyebrow">Thanks — we'll reply within one business day.</p>
+      {%- endif -%}
+      {{ form.errors | default_errors }}
+      <label>Name<input type="text" name="contact[name]" autocomplete="name" required></label>
+      <label>Email<input type="email" name="contact[email]" autocomplete="email" required></label>
+      <label>Order number (optional)<input type="text" name="contact[order]"></label>
+      <label>Message<textarea name="contact[body]" rows="6" required></textarea></label>
+      <button class="cta" type="submit">Send</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "tag": "div",
+  "settings": [
+    { "type": "select", "id": "color_scheme", "label": "Color scheme",
+      "options": [{ "value": "fog", "label": "Fog" }, { "value": "paper", "label": "Paper" }], "default": "fog" }
+  ]
+}
+{% endschema %}

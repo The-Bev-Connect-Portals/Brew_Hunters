@@ -1,20 +1,11 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "current": {
     "logo": "shopify://shop_images/brew-hinters-logo-2_-_Edited.png",
     "favicon": "shopify://shop_images/brew-hunters-logo-5.png",
     "wordmark": "Brew Hunters",
     "age_notice": "You must be 21+ to purchase · Please drink responsibly",
-    "shipping_notice": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage.",
-    "signature_notice": "Ships cold · 21+ signature required",
+    "shipping_notice": "Beer ships from Ventura, CA to U.S. states that permit direct-to-consumer beer shipment. Eligibility is confirmed at checkout.",
+    "signature_notice": "Adult 21+ signature required at delivery",
     "show_cart_note": false,
     "content_for_index": [],
     "blocks": {
@@ -28,7 +19,7 @@
           "bacgkround_color": "#FFFFFF",
           "border_thickness": 1,
           "border_radius": 0,
-          "subscription_policy_url": ""
+          "subscription_policy_url": "/policies/subscription-policy"
         }
       },
       "6159598353363395418": {

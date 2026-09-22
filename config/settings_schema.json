@@ -46,13 +46,13 @@
         "type": "textarea",
         "id": "shipping_notice",
         "label": "Shipping notice",
-        "default": "Beer ships from our licensed Ventura, CA facility to states that permit direct-to-consumer beer shipment. Enter a ZIP at checkout to confirm coverage."
+        "default": "Beer ships from Ventura, CA to U.S. states that permit direct-to-consumer beer shipment. Eligibility is confirmed at checkout."
       },
       {
         "type": "text",
         "id": "signature_notice",
         "label": "Signature notice",
-        "default": "Ships cold · 21+ signature required"
+        "default": "Adult 21+ signature required at delivery"
       }
     ]
   },

@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "type": "header",
   "name": "Header",
@@ -14,51 +5,15 @@
     "promo": {
       "type": "promo-marquee",
       "blocks": {
-        "m1": {
-          "type": "message",
-          "settings": {
-            "text": "Free shipping over $100"
-          }
-        },
-        "m2": {
-          "type": "message",
-          "settings": {
-            "text": "Fresh Beers & shipped from Ventura, CA"
-          }
-        },
-        "m3": {
-          "type": "message",
-          "settings": {
-            "text": "Adult signature required at delivery"
-          }
-        },
-        "m4": {
-          "type": "message",
-          "settings": {
-            "text": "Awesome Craft Breweries, One Box"
-          }
-        }
+        "m1": { "type": "message", "settings": { "text": "Free shipping on orders over $100" } },
+        "m2": { "type": "message", "settings": { "text": "Craft beer shipped from Ventura, CA" } },
+        "m3": { "type": "message", "settings": { "text": "Adult 21+ signature required at delivery" } },
+        "m4": { "type": "message", "settings": { "text": "Great craft breweries, one box" } }
       },
-      "block_order": [
-        "m1",
-        "m2",
-        "m3",
-        "m4"
-      ],
-      "settings": {
-        "color_scheme": "spruce",
-        "speed": 38
-      }
+      "block_order": ["m1", "m2", "m3", "m4"],
+      "settings": { "color_scheme": "spruce", "speed": 38 }
     },
-    "header": {
-      "type": "header",
-      "settings": {
-        "menu": "main-menu"
-      }
-    }
+    "header": { "type": "header", "settings": { "menu": "main-menu" } }
   },
-  "order": [
-    "promo",
-    "header"
-  ]
+  "order": ["promo", "header"]
 }
