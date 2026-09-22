@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer",
@@ -5,13 +14,6 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "ship": {
-          "type": "text",
-          "settings": {
-            "heading": "Where we ship",
-            "text": "Beer ships from Ventura, CA to U.S. states that permit direct-to-consumer beer shipment. Eligibility is confirmed at checkout."
-          }
-        },
         "shop": {
           "type": "menu",
           "settings": {
@@ -19,11 +21,11 @@
             "menu": "footer"
           }
         },
-        "news": {
-          "type": "newsletter",
+        "menu_RrtrdQ": {
+          "type": "menu",
           "settings": {
-            "heading": "Get the drop list",
-            "text": "New releases and limited cans, once a week."
+            "heading": "Our Policies",
+            "menu": "our-policies"
           }
         },
         "family": {
@@ -36,7 +38,9 @@
             "label_2": "BoozeFinders — spirits & wine",
             "url_2": "https://boozefinders.com",
             "label_3": "Night Shift Gifts — new-parent gifts",
-            "url_3": "https://nightshiftgifts.com"
+            "url_3": "https://nightshiftgifts.com",
+            "label_4": "",
+            "url_4": ""
           }
         },
         "contact": {
@@ -50,13 +54,30 @@
             "phone": "(844) 446-2443",
             "email": "beerme@brewhunters.com"
           }
+        },
+        "ship": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "heading": "Where we ship",
+            "text": "Beer ships from Ventura, CA to U.S. states that permit direct-to-consumer beer shipment. Eligibility is confirmed at checkout."
+          }
+        },
+        "news": {
+          "type": "newsletter",
+          "disabled": true,
+          "settings": {
+            "heading": "Get the drop list",
+            "text": "New releases and limited cans, once a week."
+          }
         }
       },
       "block_order": [
-        "ship",
-        "contact",
         "shop",
+        "menu_RrtrdQ",
         "family",
+        "contact",
+        "ship",
         "news"
       ],
       "settings": {
