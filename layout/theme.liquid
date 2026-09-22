@@ -183,7 +183,8 @@
     </script>
 
   {%- when 'index' -%}
-        <script type="application/ld+json">
+    {%- assign search_url_template = shop_url | append: '/search?q={search_term_string}' -%}
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -193,7 +194,7 @@
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": {{ shop_url | append: '/search?q={search_term_string}' | json }}
+          "urlTemplate": {{ search_url_template | json }}
         },
         "query-input": "required name=search_term_string"
       }
