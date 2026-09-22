@@ -61,7 +61,7 @@
         "limit": 8,
         "eyebrow": "Featured beers",
         "heading": "This week's haul",
-        "intro": "Prices are per pack. Shipping is calculated at checkout — free on orders over $100.",
+        "intro": "Prices are per pack. Shipping is calculated at checkout.",
         "view_all": true
       }
     },

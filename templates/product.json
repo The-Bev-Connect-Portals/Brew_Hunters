@@ -8,7 +8,7 @@
           "type": "accordion",
           "settings": {
             "heading": "How it ships",
-            "text": "<p>Packed at our Ventura, CA location and shipped Monday through Wednesday so packages aren't held in carrier facilities over the weekend. Shipping is calculated at checkout and is free on orders over $100. See our <a href=\"/policies/shipping-policy\">Shipping Policy</a>.</p>"
+            "text": "<p>Packed at our Ventura, CA location and shipped Monday through Wednesday so packages aren't held in carrier facilities over the weekend. Shipping is calculated at checkout. See our <a href=\"/policies/shipping-policy\">Shipping Policy</a>.</p>"
           }
         },
         "age": {
@@ -34,7 +34,7 @@
         "limit": 4,
         "eyebrow": "Goes well with",
         "heading": "Fill out the box",
-        "intro": "Orders over $100 ship free.",
+        "intro": "Mix in a few more cans before checkout.",
         "collection": "all-beer"
       }
     }

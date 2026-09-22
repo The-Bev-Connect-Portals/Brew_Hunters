@@ -5,7 +5,7 @@
     "promo": {
       "type": "promo-marquee",
       "blocks": {
-        "m1": { "type": "message", "settings": { "text": "Free shipping on orders over $100" } },
+        "m1": { "type": "message", "settings": { "text": "Build your own 6 or 12 can box" } },
         "m2": { "type": "message", "settings": { "text": "Craft beer shipped from Ventura, CA" } },
         "m3": { "type": "message", "settings": { "text": "Adult 21+ signature required at delivery" } },
         "m4": { "type": "message", "settings": { "text": "Great craft breweries, one box" } }
