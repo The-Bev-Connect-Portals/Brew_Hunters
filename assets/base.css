@@ -115,8 +115,26 @@ p{margin:0}
 .nav__dd summary:hover{color:var(--ember)}
 .nav__panel{position:absolute;top:calc(100% + .85rem);left:-1rem;min-width:16rem;background:var(--paper);border:2px solid var(--spruce);border-radius:12px;padding:.5rem;display:flex;flex-direction:column;box-shadow:4px 4px 0 var(--spruce);z-index:50}
 .nav__panel a{padding:.55rem .75rem;border-radius:8px;font-size:.85rem;white-space:nowrap}
-.nav__panel--cols{display:grid;grid-template-columns:repeat(3,minmax(12rem,1fr));gap:0 .25rem;max-height:min(70vh,34rem);overflow-y:auto}
-@media(max-width:1180px){.nav__panel--cols{grid-template-columns:repeat(2,minmax(12rem,1fr))}}
+.nav__mega-list{display:flex;flex-direction:column}
+/* Mega menu: anchored to the sticky header (not the nav item) and centred,
+   brand names flow down alphabetical columns and wrap instead of overlapping. */
+.nav__dd--mega{position:static}
+.nav__panel--mega{
+  display:block;left:50%;top:calc(100% - 2px);transform:translateX(-50%);
+  width:min(64rem,calc(100vw - 2rem));min-width:0;
+  padding:1.4rem 1.6rem 1.5rem;border-radius:0 0 16px 16px;
+}
+.nav__mega-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  margin:0 0 .9rem;padding:0 .75rem .8rem;border-bottom:2px solid var(--spruce);
+  font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:1.05rem;letter-spacing:.01em;
+}
+.nav__mega-head a{font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.12em;color:var(--clay);padding:0}
+.nav__panel--mega .nav__mega-list{display:block;columns:4 13rem;column-gap:1.25rem}
+.nav__panel--mega .nav__mega-list a{
+  display:block;break-inside:avoid;white-space:normal;line-height:1.25;
+  padding:.5rem .75rem;margin-bottom:.15rem;font-size:.84rem;
+}
 .nav__panel a:hover,.nav__panel a:focus-visible{background:var(--fog)}
 .nav a[aria-current],.nav__dd summary[aria-current]{color:var(--ember)}
 @media(prefers-reduced-motion:reduce){.nav__dd summary::after{transition:none}}
