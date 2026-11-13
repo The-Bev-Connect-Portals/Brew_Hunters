@@ -61,7 +61,7 @@
           "settings": {
             "icon": "box",
             "title": "Build your own box",
-            "text": "Mix singles from across the roster into a 6 or 12 can box. Each can is priced individually."
+            "text": "Mix singles from across the roster into a 6, 12 or 24 can box. Each can is priced individually."
           }
         }
       },
@@ -228,7 +228,7 @@
         "anchor": "mix",
         "eyebrow": "Build a box",
         "heading": "Your box. Your beers.",
-        "text": "Pick 6 or 12 singles from across the roster and we'll pack them together in one box. Each can is priced individually.",
+        "text": "Pick 6, 12 or 24 singles from across the roster and we'll pack them together in one box. Each can is priced individually.",
         "fallback_asset": "mixed-box.webp",
         "fallback_alt": "Mixed box of Central Coast craft beer cans",
         "cta_label": "Start building",
