@@ -1,0 +1,150 @@
+{%- comment -%}
+  Brand shelf — a tabbed product grid. The first tab shows the section's
+  "All" collection; each block adds a brand tab pointing at that brand's
+  collection. Tabs are real links to the collection page, so without JS
+  they still navigate. With JS they swap panels in place.
+{%- endcomment -%}
+{%- liquid
+  assign scheme = section.settings.color_scheme | default: 'paper'
+  assign all_coll = section.settings.collection
+  assign limit_all = section.settings.limit_all
+  assign limit_brand = section.settings.limit_brand
+  assign sid = section.id
+-%}
+<section class="band scheme scheme--{{ scheme }}" id="{{ section.settings.anchor | default: 'shelf' }}" data-shelf>
+  <div class="wrap">
+    <div class="band__head armed">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="eyebrow eyebrow--clay">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.intro != blank -%}<p>{{ section.settings.intro }}</p>{%- endif -%}
+    </div>
+
+    <div class="shelf__tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+      {%- if all_coll != blank -%}
+        <a class="shelf__tab" role="tab" id="tab-{{ sid }}-all" href="{{ all_coll.url }}"
+           aria-selected="true" aria-controls="panel-{{ sid }}-all" data-shelf-tab>
+          {{ section.settings.all_label | default: 'All beer' }}
+        </a>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        {%- if c != blank and c.products_count > 0 -%}
+          <a class="shelf__tab" role="tab" id="tab-{{ sid }}-{{ block.id }}" href="{{ c.url }}"
+             aria-selected="false" aria-controls="panel-{{ sid }}-{{ block.id }}" tabindex="-1"
+             data-shelf-tab {{ block.shopify_attributes }}>
+            {{ block.settings.label | default: c.title }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if all_coll != blank -%}
+      <div class="shelf__panel" role="tabpanel" id="panel-{{ sid }}-all" aria-labelledby="tab-{{ sid }}-all">
+        <div class="grid">
+          {%- for product in all_coll.products limit: limit_all -%}
+            {% render 'product-card', card_product: product %}
+          {%- endfor -%}
+        </div>
+        <div class="hero__actions shelf__more">
+          <a class="cta cta--ghost" href="{{ all_coll.url }}">View all {{ all_coll.products_count }} beers</a>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- assign c = block.settings.collection -%}
+      {%- if c != blank and c.products_count > 0 -%}
+        <div class="shelf__panel" role="tabpanel" id="panel-{{ sid }}-{{ block.id }}"
+             aria-labelledby="tab-{{ sid }}-{{ block.id }}" hidden>
+          <div class="grid">
+            {%- for product in c.products limit: limit_brand -%}
+              {% render 'product-card', card_product: product %}
+            {%- endfor -%}
+          </div>
+          <div class="hero__actions shelf__more">
+            <a class="cta cta--ghost" href="{{ c.url }}">Shop all {{ block.settings.label | default: c.title }}</a>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('{{ section.settings.anchor | default: 'shelf' }}');
+    if (!root) return;
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-shelf-tab]'));
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.setAttribute('tabindex', on ? '0' : '-1');
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+      tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+    if (tabs.length && !tabs.some(function (t) { return t.getAttribute('aria-selected') === 'true'; })) select(tabs[0], false);
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        select(tab, false);
+      });
+      tab.addEventListener('keydown', function (e) {
+        var n = null;
+        if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+        if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+        if (e.key === 'Home') n = tabs[0];
+        if (e.key === 'End') n = tabs[tabs.length - 1];
+        if (n) { e.preventDefault(); select(n, true); }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brand shelf",
+  "tag": "div",
+  "max_blocks": 40,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "fog", "label": "Fog" },
+        { "value": "spruce", "label": "Spruce" }
+      ],
+      "default": "paper"
+    },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "shelf" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The full lineup" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every beer we carry" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Pick a brewery to see its lineup. Prices are per pack." },
+    { "type": "collection", "id": "collection", "label": "All tab collection" },
+    { "type": "text", "id": "all_label", "label": "All tab label", "default": "All beer" },
+    { "type": "range", "id": "limit_all", "label": "Products in All tab", "min": 4, "max": 48, "step": 4, "default": 16 },
+    { "type": "range", "id": "limit_brand", "label": "Products per brand tab", "min": 4, "max": 24, "step": 4, "default": 12 }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Tab label override" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Brand shelf" }]
+}
+{% endschema %}
