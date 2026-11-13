@@ -22,52 +22,204 @@
     },
     "wave_1": {
       "type": "wave-divider",
-      "settings": { "shape": "a", "color_back": "clay", "color_mid": "ember", "color_front": "fog" }
+      "settings": {
+        "shape": "a",
+        "color_back": "clay",
+        "color_mid": "ember",
+        "color_front": "fog"
+      }
     },
     "props": {
       "type": "value-props",
       "blocks": {
-        "p1": { "type": "prop", "settings": { "icon": "box", "title": "Packed in Ventura, CA", "text": "Every order is packed by our team in Ventura and ships Monday through Wednesday." } },
-        "p2": { "type": "prop", "settings": { "icon": "brewery", "title": "Great craft breweries", "text": "Flagships, seasonals and hard-to-find releases from Central Coast and partner breweries." } },
-        "p3": { "type": "prop", "settings": { "icon": "shield", "title": "21+ signature at delivery", "text": "An adult 21 or older with valid ID must sign for every order." } },
-        "p4": { "type": "prop", "settings": { "icon": "box", "title": "Build your own box", "text": "Mix singles from across the roster into a 6 or 12 can box. Each can is priced individually." } }
+        "p1": {
+          "type": "prop",
+          "settings": {
+            "icon": "box",
+            "title": "Packed in Ventura, CA",
+            "text": "Every order is packed by our team in Ventura and ships Monday through Wednesday."
+          }
+        },
+        "p2": {
+          "type": "prop",
+          "settings": {
+            "icon": "brewery",
+            "title": "Great craft breweries",
+            "text": "Flagships, seasonals and hard-to-find releases from Central Coast and partner breweries."
+          }
+        },
+        "p3": {
+          "type": "prop",
+          "settings": {
+            "icon": "shield",
+            "title": "21+ signature at delivery",
+            "text": "An adult 21 or older with valid ID must sign for every order."
+          }
+        },
+        "p4": {
+          "type": "prop",
+          "settings": {
+            "icon": "box",
+            "title": "Build your own box",
+            "text": "Mix singles from across the roster into a 6 or 12 can box. Each can is priced individually."
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3", "p4"],
-      "settings": { "color_scheme": "fog", "flush_top": true }
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "color_scheme": "fog",
+        "flush_top": true
+      }
     },
     "breweries": {
       "type": "brewery-tiles",
       "blocks": {
-        "b1": { "type": "tile", "settings": { "collection": "topa-topa-brewing-co", "title": "Topa Topa Brewing Co.", "location": "Ventura & Ojai, CA", "count_label": "", "url": "", "tile_color": "gold" } },
-        "b2": { "type": "tile", "settings": { "collection": "mother-earth-brew-co", "title": "Mother Earth Brew Co.", "location": "Vista, CA", "count_label": "", "url": "", "tile_color": "surf" } },
-        "b3": { "type": "tile", "settings": { "collection": "figueroa-mountain-brew-co", "title": "Figueroa Mountain", "location": "Buellton, CA", "count_label": "", "url": "", "tile_color": "ember" } },
-        "b4": { "type": "tile", "settings": { "collection": "rincon-brewery", "title": "Rincon Brewery", "location": "Carpinteria, CA", "count_label": "", "url": "", "tile_color": "paper" } }
+        "b1": {
+          "type": "tile",
+          "settings": {
+            "collection": "topa-topa-brewing-co",
+            "title": "Topa Topa Brewing Co.",
+            "location": "Ventura & Ojai, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "gold"
+          }
+        },
+        "b2": {
+          "type": "tile",
+          "settings": {
+            "collection": "mother-earth-brew-co",
+            "title": "Mother Earth Brew Co.",
+            "location": "Vista, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "surf"
+          }
+        },
+        "b3": {
+          "type": "tile",
+          "settings": {
+            "collection": "figueroa-mountain-brew-co",
+            "title": "Figueroa Mountain",
+            "location": "Buellton, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "ember"
+          }
+        },
+        "b4": {
+          "type": "tile",
+          "settings": {
+            "collection": "rincon-brewery",
+            "title": "Rincon Brewery",
+            "location": "Carpinteria, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "paper"
+          }
+        },
+        "b5": {
+          "type": "tile",
+          "settings": {
+            "collection": "madewest-brewing-co",
+            "title": "MadeWest Brewing Co.",
+            "location": "Ventura, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "gold"
+          }
+        },
+        "b6": {
+          "type": "tile",
+          "settings": {
+            "collection": "ghostfish-brewing-company",
+            "title": "Ghostfish Brewing",
+            "location": "Seattle, WA · Gluten free",
+            "count_label": "",
+            "url": "",
+            "tile_color": "surf"
+          }
+        },
+        "b7": {
+          "type": "tile",
+          "settings": {
+            "collection": "holidaily-brewing-co",
+            "title": "Holidaily Brewing Co.",
+            "location": "Golden, CO · Gluten free",
+            "count_label": "",
+            "url": "",
+            "tile_color": "ember"
+          }
+        },
+        "b8": {
+          "type": "tile",
+          "settings": {
+            "collection": "embolden-beer-co",
+            "title": "Embolden Beer Co.",
+            "location": "",
+            "count_label": "",
+            "url": "",
+            "tile_color": "paper"
+          }
+        },
+        "b9": {
+          "type": "tile",
+          "settings": {
+            "collection": "maui-brewing-co",
+            "title": "Maui Brewing Co.",
+            "location": "Kihei, HI",
+            "count_label": "",
+            "url": "",
+            "tile_color": "gold"
+          }
+        },
+        "b10": {
+          "type": "tile",
+          "settings": {
+            "collection": "donnas-pickle-beer",
+            "title": "Donna's Pickle Beer",
+            "location": "",
+            "count_label": "",
+            "url": "",
+            "tile_color": "surf"
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3", "b4"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10"
+      ],
       "settings": {
         "color_scheme": "fog",
         "anchor": "breweries",
         "eyebrow": "The roster",
         "heading": "Breweries worth the drive",
-        "intro": "Craft beer from Central Coast favorites and partner breweries — the flagships, the seasonals, and limited releases."
-      }
-    },
-    "haul": {
-      "type": "featured-products",
-      "settings": {
-        "color_scheme": "paper",
-        "anchor": "haul",
-        "collection": "all-beer",
-        "limit": 8,
-        "eyebrow": "Featured beers",
-        "heading": "This week's haul",
-        "intro": "Prices are per pack. Shipping is calculated at checkout.",
-        "view_all": true
+        "intro": "Our brewery partners — Central Coast favorites plus partner breweries from Seattle to Maui. Flagships, seasonals and limited releases.",
+        "columns": 5,
+        "tile_size": "large"
       }
     },
     "wave_2": {
       "type": "wave-divider",
-      "settings": { "shape": "b", "color_back": "gold", "color_mid": "clay", "color_front": "ember" }
+      "settings": {
+        "shape": "b",
+        "color_back": "gold",
+        "color_mid": "clay",
+        "color_front": "ember"
+      }
     },
     "mix": {
       "type": "build-a-box-banner",
@@ -83,7 +235,410 @@
         "cta_url": "/pages/build-a-box",
         "sticker_text": "Mix it · Match it · Ship it ·"
       }
+    },
+    "more_breweries": {
+      "type": "brewery-tiles",
+      "blocks": {
+        "b1": {
+          "type": "tile",
+          "settings": {
+            "collection": "alesmith-brewing-company",
+            "title": "AleSmith",
+            "location": "San Diego, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "gold"
+          }
+        },
+        "b2": {
+          "type": "tile",
+          "settings": {
+            "collection": "chimay",
+            "title": "Chimay",
+            "location": "Belgium",
+            "count_label": "",
+            "url": "",
+            "tile_color": "surf"
+          }
+        },
+        "b3": {
+          "type": "tile",
+          "settings": {
+            "collection": "duvel",
+            "title": "Duvel",
+            "location": "Belgium",
+            "count_label": "",
+            "url": "",
+            "tile_color": "ember"
+          }
+        },
+        "b4": {
+          "type": "tile",
+          "settings": {
+            "collection": "firestone-walker-brewing-company",
+            "title": "Firestone Walker",
+            "location": "Paso Robles, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "paper"
+          }
+        },
+        "b5": {
+          "type": "tile",
+          "settings": {
+            "collection": "fremont-brewing",
+            "title": "Fremont Brewing",
+            "location": "Seattle, WA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "gold"
+          }
+        },
+        "b6": {
+          "type": "tile",
+          "settings": {
+            "collection": "great-divide-brewing-co",
+            "title": "Great Divide",
+            "location": "Denver, CO",
+            "count_label": "",
+            "url": "",
+            "tile_color": "surf"
+          }
+        },
+        "b7": {
+          "type": "tile",
+          "settings": {
+            "collection": "kona-brewing-co",
+            "title": "Kona Brewing Co.",
+            "location": "Kailua-Kona, HI",
+            "count_label": "",
+            "url": "",
+            "tile_color": "ember"
+          }
+        },
+        "b8": {
+          "type": "tile",
+          "settings": {
+            "collection": "lagunitas-brewing-company",
+            "title": "Lagunitas",
+            "location": "Petaluma, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "paper"
+          }
+        },
+        "b9": {
+          "type": "tile",
+          "settings": {
+            "collection": "north-coast-brewing-co",
+            "title": "North Coast",
+            "location": "Fort Bragg, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "gold"
+          }
+        },
+        "b10": {
+          "type": "tile",
+          "settings": {
+            "collection": "not-your-fathers",
+            "title": "Not Your Father's",
+            "location": "",
+            "count_label": "",
+            "url": "",
+            "tile_color": "surf"
+          }
+        },
+        "b11": {
+          "type": "tile",
+          "settings": {
+            "collection": "st-bernardus",
+            "title": "St. Bernardus",
+            "location": "Belgium",
+            "count_label": "",
+            "url": "",
+            "tile_color": "ember"
+          }
+        },
+        "b12": {
+          "type": "tile",
+          "settings": {
+            "collection": "stone-brewing",
+            "title": "Stone Brewing",
+            "location": "Escondido, CA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "paper"
+          }
+        },
+        "b13": {
+          "type": "tile",
+          "settings": {
+            "collection": "tripel-karmeliet",
+            "title": "Tripel Karmeliet",
+            "location": "Belgium",
+            "count_label": "",
+            "url": "",
+            "tile_color": "gold"
+          }
+        },
+        "b14": {
+          "type": "tile",
+          "settings": {
+            "collection": "victory-brewing-company",
+            "title": "Victory Brewing",
+            "location": "Downingtown, PA",
+            "count_label": "",
+            "url": "",
+            "tile_color": "surf"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10",
+        "b11",
+        "b12",
+        "b13",
+        "b14"
+      ],
+      "settings": {
+        "color_scheme": "fog",
+        "anchor": "more-breweries",
+        "columns": 7,
+        "tile_size": "compact",
+        "eyebrow": "Also on the shelf",
+        "heading": "Classics worth gifting",
+        "intro": "Belgian ales, Hawaiian island beers and American craft favorites, in 4- and 6-packs."
+      }
+    },
+    "shelf": {
+      "type": "brand-shelf",
+      "blocks": {
+        "s1": {
+          "type": "brand",
+          "settings": {
+            "collection": "alesmith-brewing-company",
+            "label": "AleSmith"
+          }
+        },
+        "s2": {
+          "type": "brand",
+          "settings": {
+            "collection": "chimay",
+            "label": "Chimay"
+          }
+        },
+        "s3": {
+          "type": "brand",
+          "settings": {
+            "collection": "donnas-pickle-beer",
+            "label": "Donna's Pickle Beer"
+          }
+        },
+        "s4": {
+          "type": "brand",
+          "settings": {
+            "collection": "duvel",
+            "label": "Duvel"
+          }
+        },
+        "s5": {
+          "type": "brand",
+          "settings": {
+            "collection": "embolden-beer-co",
+            "label": "Embolden Beer Co."
+          }
+        },
+        "s6": {
+          "type": "brand",
+          "settings": {
+            "collection": "figueroa-mountain-brew-co",
+            "label": "Figueroa Mountain"
+          }
+        },
+        "s7": {
+          "type": "brand",
+          "settings": {
+            "collection": "firestone-walker-brewing-company",
+            "label": "Firestone Walker"
+          }
+        },
+        "s8": {
+          "type": "brand",
+          "settings": {
+            "collection": "fremont-brewing",
+            "label": "Fremont Brewing"
+          }
+        },
+        "s9": {
+          "type": "brand",
+          "settings": {
+            "collection": "ghostfish-brewing-company",
+            "label": "Ghostfish Brewing"
+          }
+        },
+        "s10": {
+          "type": "brand",
+          "settings": {
+            "collection": "great-divide-brewing-co",
+            "label": "Great Divide"
+          }
+        },
+        "s11": {
+          "type": "brand",
+          "settings": {
+            "collection": "holidaily-brewing-co",
+            "label": "Holidaily Brewing Co."
+          }
+        },
+        "s12": {
+          "type": "brand",
+          "settings": {
+            "collection": "kona-brewing-co",
+            "label": "Kona Brewing Co."
+          }
+        },
+        "s13": {
+          "type": "brand",
+          "settings": {
+            "collection": "lagunitas-brewing-company",
+            "label": "Lagunitas"
+          }
+        },
+        "s14": {
+          "type": "brand",
+          "settings": {
+            "collection": "madewest-brewing-co",
+            "label": "MadeWest Brewing Co."
+          }
+        },
+        "s15": {
+          "type": "brand",
+          "settings": {
+            "collection": "maui-brewing-co",
+            "label": "Maui Brewing Co."
+          }
+        },
+        "s16": {
+          "type": "brand",
+          "settings": {
+            "collection": "mother-earth-brew-co",
+            "label": "Mother Earth Brew Co."
+          }
+        },
+        "s17": {
+          "type": "brand",
+          "settings": {
+            "collection": "north-coast-brewing-co",
+            "label": "North Coast"
+          }
+        },
+        "s18": {
+          "type": "brand",
+          "settings": {
+            "collection": "not-your-fathers",
+            "label": "Not Your Father's"
+          }
+        },
+        "s19": {
+          "type": "brand",
+          "settings": {
+            "collection": "rincon-brewery",
+            "label": "Rincon Brewery"
+          }
+        },
+        "s20": {
+          "type": "brand",
+          "settings": {
+            "collection": "st-bernardus",
+            "label": "St. Bernardus"
+          }
+        },
+        "s21": {
+          "type": "brand",
+          "settings": {
+            "collection": "stone-brewing",
+            "label": "Stone Brewing"
+          }
+        },
+        "s22": {
+          "type": "brand",
+          "settings": {
+            "collection": "topa-topa-brewing-co",
+            "label": "Topa Topa Brewing Co."
+          }
+        },
+        "s23": {
+          "type": "brand",
+          "settings": {
+            "collection": "tripel-karmeliet",
+            "label": "Tripel Karmeliet"
+          }
+        },
+        "s24": {
+          "type": "brand",
+          "settings": {
+            "collection": "victory-brewing-company",
+            "label": "Victory Brewing"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6",
+        "s7",
+        "s8",
+        "s9",
+        "s10",
+        "s11",
+        "s12",
+        "s13",
+        "s14",
+        "s15",
+        "s16",
+        "s17",
+        "s18",
+        "s19",
+        "s20",
+        "s21",
+        "s22",
+        "s23",
+        "s24"
+      ],
+      "settings": {
+        "color_scheme": "paper",
+        "anchor": "haul",
+        "eyebrow": "The full lineup",
+        "heading": "Every beer we carry",
+        "intro": "Pick a brewery to see its whole lineup. Prices are per pack; shipping is calculated at checkout.",
+        "collection": "all-beer",
+        "all_label": "All beer",
+        "limit_all": 16,
+        "limit_brand": 12
+      }
     }
   },
-  "order": ["hero", "wave_1", "props", "breweries", "haul", "wave_2", "mix"]
+  "order": [
+    "hero",
+    "wave_1",
+    "props",
+    "breweries",
+    "more_breweries",
+    "shelf",
+    "wave_2",
+    "mix"
+  ]
 }

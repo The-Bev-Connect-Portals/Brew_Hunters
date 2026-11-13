@@ -1,5 +1,6 @@
 {%- liquid
   assign scheme = section.settings.color_scheme | default: 'fog'
+  assign cols = section.settings.columns | default: 4
 -%}
 <section class="band scheme scheme--{{ scheme }}" id="{{ section.settings.anchor | default: 'breweries' }}">
   <div class="wrap">
@@ -13,7 +14,7 @@
       {%- if section.settings.intro != blank -%}<p>{{ section.settings.intro }}</p>{%- endif -%}
     </div>
 
-    <div class="brews armed">
+    <div class="brews brews--{{ section.settings.tile_size | default: 'large' }} armed" style="--cols:{{ cols }}">
       {%- for block in section.blocks -%}
         {%- liquid
           assign target = block.settings.collection
@@ -45,7 +46,7 @@
 {
   "name": "Brewery tiles",
   "tag": "div",
-  "max_blocks": 8,
+  "max_blocks": 30,
   "settings": [
     {
       "type": "select",
@@ -59,6 +60,17 @@
       "default": "fog"
     },
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "breweries" },
+    { "type": "range", "id": "columns", "label": "Columns on desktop", "min": 3, "max": 7, "step": 1, "default": 4 },
+    {
+      "type": "select",
+      "id": "tile_size",
+      "label": "Tile size",
+      "options": [
+        { "value": "large", "label": "Large" },
+        { "value": "compact", "label": "Compact" }
+      ],
+      "default": "large"
+    },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The roster" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Breweries worth the drive" },
     { "type": "textarea", "id": "intro", "label": "Intro", "default": "Craft beer from Central Coast favorites and partner breweries — the flagships, the seasonals, and limited releases." }

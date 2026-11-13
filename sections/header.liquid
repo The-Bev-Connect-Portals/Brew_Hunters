@@ -13,7 +13,7 @@
         {%- if link.links.size > 0 -%}
           <details class="nav__dd" data-nav-dd>
             <summary{% if link.child_active %} aria-current="true"{% endif %}>{{ link.title }}</summary>
-            <div class="nav__panel">
+            <div class="nav__panel{% if link.links.size > 8 %} nav__panel--cols{% endif %}">
               {%- for child in link.links -%}
                 <a href="{{ child.url }}"{% if child.active %} aria-current="page"{% endif %}>{{ child.title }}</a>
               {%- endfor -%}
@@ -39,7 +39,7 @@
     {%- for link in section.settings.menu.links -%}
       {%- if link.links.size > 0 -%}
         <p class="hdr__drawer-head">{{ link.title }}</p>
-        <div class="hdr__drawer-sub">
+        <div class="hdr__drawer-sub{% if link.links.size > 8 %} hdr__drawer-sub--cols{% endif %}">
           {%- for child in link.links -%}
             <a href="{{ child.url }}">{{ child.title }}</a>
           {%- endfor -%}
