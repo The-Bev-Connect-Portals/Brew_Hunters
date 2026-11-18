@@ -523,3 +523,17 @@ p{margin:0}
 
 .pdp__appblock{margin-block:.9rem}
 .pdp__appblock:empty{display:none}
+
+/* ---------------- collection description: read more ---------------- */
+.collection__title{font-size:clamp(2.4rem,6vw,4.6rem)}
+.collection-desc{max-width:72ch;margin:-1rem 0 2.4rem}
+.collection-desc__body{font-size:1rem}
+.collection-desc__body h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+.collection-desc__body h3{font-size:clamp(1.1rem,2.2vw,1.35rem)}
+.collection-desc.is-collapsible .collection-desc__body{position:relative;max-height:9.5rem;overflow:hidden;transition:max-height .35s ease}
+.collection-desc.is-collapsible .collection-desc__body::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4rem;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none}
+.collection-desc.is-open .collection-desc__body{max-height:none}
+.collection-desc.is-open .collection-desc__body::after{display:none}
+.collection-desc__toggle{margin-top:.6rem;background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--clay);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.collection-desc__toggle:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.collection-desc.is-collapsible .collection-desc__body{transition:none}}

@@ -608,3 +608,27 @@
     document.querySelectorAll('.armed').forEach(function (el) { io.observe(el); });
   }
 })();
+
+/* ---------------- collection description: read more ----------------
+   Full description stays in the HTML (indexed by search engines);
+   JS only collapses it visually when it is taller than the preview. */
+(function () {
+  document.querySelectorAll('[data-readmore]').forEach(function (wrap) {
+    var body = wrap.querySelector('.collection-desc__body');
+    var btn = wrap.querySelector('.collection-desc__toggle');
+    var label = wrap.querySelector('[data-readmore-label]');
+    if (!body || !btn) return;
+    wrap.classList.add('is-collapsible');
+    if (body.scrollHeight <= body.clientHeight + 24) {
+      wrap.classList.remove('is-collapsible');
+      return;
+    }
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      var open = wrap.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      label.textContent = open ? 'Show less' : 'Read more';
+      if (!open) wrap.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
+  });
+})();

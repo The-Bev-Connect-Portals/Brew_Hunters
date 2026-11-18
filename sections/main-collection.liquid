@@ -6,12 +6,19 @@
     <div class="band__head">
       <div>
         <p class="eyebrow eyebrow--clay">{{ collection.products_count }} beers</p>
-        <h2>{{ collection.title }}</h2>
+        <h1 class="collection__title">{{ collection.title }}</h1>
       </div>
-      {%- if collection.description != blank -%}
-        <div class="rte">{{ collection.description }}</div>
-      {%- endif -%}
     </div>
+
+    {%- if collection.description != blank -%}
+      {%- assign desc_id = 'CollectionDesc-' | append: section.id -%}
+      <div class="collection-desc" data-readmore>
+        <div class="collection-desc__body rte" id="{{ desc_id }}">{{ collection.description }}</div>
+        <button type="button" class="collection-desc__toggle" aria-controls="{{ desc_id }}" aria-expanded="false" hidden>
+          <span data-readmore-label>Read more</span>
+        </button>
+      </div>
+    {%- endif -%}
 
     {%- paginate collection.products by 24 -%}
       {%- if collection.products.size > 0 -%}
